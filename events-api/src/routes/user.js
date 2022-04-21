@@ -21,6 +21,7 @@ routes.post('/', async (req, res) => {
 
     const user = await controller.create({ name, email, password });
 
+    await transaction.commit();
     return res.sendOk(201, { user });
   } catch (e) {
     await transaction.rollback();
