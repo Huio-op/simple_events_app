@@ -32,3 +32,17 @@
 .Login .loginButton:hover {
   background-color: #2e4052;
 }
+
+.Login .signupButton {
+  border-color: #68c3b7;
+  color: #68c3b7;
+  width: 100%;
+}
+
+.Login .signupRedirect {
+  width: 100%;
+}
+
+.Login .signupButton:hover {
+  border-color: #2e4052;
+}

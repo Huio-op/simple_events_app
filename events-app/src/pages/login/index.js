@@ -20,6 +20,11 @@ const Login = () => {
         <Button className="loginButton" variant="contained">
           Login
         </Button>
+        <a className="signupRedirect" href="/signup">
+          <Button className="signupButton" variant="outlined">
+            Sign up
+          </Button>
+        </a>
       </div>
     </div>
   );
