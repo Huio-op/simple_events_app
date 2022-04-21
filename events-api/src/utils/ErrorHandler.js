@@ -1,7 +1,7 @@
 const validator = require('./validator');
 
 class ErrorHandler {
-  throwError(code, message) {
+  static throwError(code, message) {
     const error = new Error(message);
     error.status = code;
     console.error(message);
@@ -17,7 +17,7 @@ class ErrorHandler {
         ),
       });
     }
-    console.log(trace);
+
     return res.status(code).json({ error, message });
   }
 
