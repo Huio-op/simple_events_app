@@ -7,8 +7,8 @@ const Login = () => {
   const notFunction = () => {};
 
   return (
-    <div className="Login">
-      <div className="loginCard">
+    <div className="Login defaultBackground">
+      <div className="card">
         <h3>Login</h3>
         <TextField id="email" label="E-mail" variant="outlined" type="email" />
         <TextField
@@ -17,11 +17,11 @@ const Login = () => {
           variant="outlined"
           type="password"
         />
-        <Button className="loginButton" variant="contained">
+        <Button className="filledButton" variant="contained">
           Login
         </Button>
         <a className="signupRedirect" href="/signup">
-          <Button className="signupButton" variant="outlined">
+          <Button className="outlinedButton" variant="outlined">
             Sign up
           </Button>
         </a>
