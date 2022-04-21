@@ -1,10 +1,8 @@
 .Login {
   text-align: center;
-  background-color: #fafafa;
+  background-color: #2e4052;
   display: flex;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -12,7 +10,7 @@
 }
 
 .Login .loginCard {
-  background-color: #fff;
+  background-color: rgb(255, 255, 255, 0.8);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,6 +20,7 @@
   gap: 15px;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(14px);
 }
 
 .Login .loginButton {
