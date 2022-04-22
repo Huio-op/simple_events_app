@@ -1,3 +1,7 @@
 .loginRedirect {
   width: 100%;
 }
+
+.signupRedirect {
+  text-decoration: none;
+}
