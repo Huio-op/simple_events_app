@@ -21,8 +21,13 @@ const Signup = () => {
         await Api.User.createUser(fieldValues.email, fieldValues.password);
         Toast.success('Usuário criado com sucesso!');
       } catch (e) {
+        console.log('err', { e });
         console.error(e);
-        Toast.error('Erro ao criar usuário!');
+        if (e.response?.data.error.status === 409) {
+          Toast.error('Usuário já cadastrado!');
+        } else {
+          Toast.error('Erro ao criar usuário!');
+        }
       }
     } else {
       return false;

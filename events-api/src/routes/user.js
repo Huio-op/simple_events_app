@@ -3,6 +3,7 @@ const knex = require('../database/knex');
 const UserController = require('../controllers/UserController');
 const ErrorHandler = require('../utils/ErrorHandler');
 const Mailer = require('../utils/Mailer');
+const readProps = require('../utils/readProps');
 
 // Encontrar um usuário com o email solicitado
 routes.get('/', async (req, res) => {
@@ -12,7 +13,7 @@ routes.get('/', async (req, res) => {
     const user = await controller.findOne({ email });
 
     if (!user) {
-      ErrorHandler.throwError(404, 'Usuário não cadastrado!');
+      ErrorHandler.throwError(404, readProps('user_already_created'));
     }
 
     return res.sendOk(200, { user });
