@@ -5,6 +5,11 @@ class UserApi {
     const { data } = await Axios.get('/user', { params: { email: email } });
     return data;
   };
+
+  static createUser = async (email, password) => {
+    const { data } = await Axios.post('/user', { email, password });
+    return data;
+  };
 }
 
 export default UserApi;

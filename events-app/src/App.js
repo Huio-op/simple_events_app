@@ -8,6 +8,8 @@ import {
 
 import Login from './pages/login';
 import Signup from './pages/signup';
+import { ToastContainer } from 'react-toastify';
+import { injectStyle } from 'react-toastify/dist/inject-style';
 
 const App = () => {
   return (
@@ -18,9 +20,25 @@ const App = () => {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
         </Routes>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          closeButton={false}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </>
     </Router>
   );
 };
+
+if (typeof window !== 'undefined') {
+  injectStyle();
+}
 
 export default App;
