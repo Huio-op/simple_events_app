@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^1.0.7",
     "nodemailer": "^6.7.3",
+    "nodemon": "^2.0.15",
     "pg": "^8.7.3",
     "properties-reader": "^2.2.0"
   }
