@@ -2,6 +2,7 @@ const routes = require('express').Router();
 const knex = require('../database/knex');
 const UserController = require('../controllers/UserController');
 const ErrorHandler = require('../utils/ErrorHandler');
+const Mailer = require('../utils/Mailer');
 
 // Encontrar um usuário com o email solicitado
 routes.get('/', async (req, res) => {
@@ -37,6 +38,10 @@ routes.post('/', async (req, res) => {
     }
 
     await transaction.commit();
+
+    const mailer = new Mailer();
+    mailer.sendUserCreated(email);
+
     return res.sendOk(201, { user });
   } catch (e) {
     await transaction.rollback();
