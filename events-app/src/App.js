@@ -8,6 +8,7 @@ import {
 
 import Login from './pages/login';
 import Signup from './pages/signup';
+import NotFound from './pages/notFound';
 import { ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer
           position="bottom-right"
