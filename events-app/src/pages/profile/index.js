@@ -15,25 +15,27 @@ const Profile = () => {
 
   //TODO setar default values para os campos baseado noq o usuário tem de informação
 
-  useEffect(() => {
-    enteringForm()
-  },[])
-
-  const enteringForm = async () => {
-    console.log("entrou")
-    try { 
-      const {user} = await Api.User.findUser();
+  const fetchUser = async () => {
+    console.log('entrou');
+    try {
+      const { user } = await Api.User.findUser();
       console.log(user.email);
-      setUserValues({userValues, 
-                      name: user.name,
-                      email: user.email,
-                      phone: user.phone,
-                      country: user.country});
+      setUserValues({
+        userValues,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        country: user.country,
+      });
       return user;
     } catch (e) {
-      console.log("deu ruim");
+      console.log('deu ruim');
     }
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   //TODO: editUser method should make something
   const editUser = async (event) => {
@@ -87,13 +89,15 @@ const Profile = () => {
     }
   };
 
+  console.log('aaaaaaaaaaaaaaaa', userValues);
+
   return (
     <div className="Profile profileBackground">
       <div className="PageHeader">
         <TopMenuBar />
       </div>
       <div className="PageCard">
-        <form onLoad={enteringForm} onSubmit={editUser}>
+        <form onSubmit={editUser}>
           <div className="card">
             <h3>Editar Cadastro</h3>
             <TextField
@@ -104,7 +108,6 @@ const Profile = () => {
             />
             <TextField
               id="email"
-              defaultValue={userValues.email}
               label="E-mail"
               variant="outlined"
               name="email"

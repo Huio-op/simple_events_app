@@ -5,8 +5,20 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Api from '../../api/Api';
+import Toast from '../../utils/Toast';
 
-const EventCard = ({ title, description }) => {
+const EventCard = ({ title, description, eventId }) => {
+  const subscribeToEvent = async () => {
+    try {
+      await Api.Events.subscribe(eventId);
+      Toast.success(`Inscrição no evento ${title} confirmada!`);
+    } catch (e) {
+      console.error(e);
+      Toast.error('Erro ao confirmar inscrição!');
+    }
+  };
+
   return (
     <>
       <Card sx={{ maxWidth: 500, width: '100%' }}>
@@ -19,7 +31,9 @@ const EventCard = ({ title, description }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Inscrever-se</Button>
+          <Button size="small" onClick={subscribeToEvent}>
+            Inscrever-se
+          </Button>
           <Button size="small">Saiba mais</Button>
         </CardActions>
       </Card>

@@ -30,6 +30,23 @@ class EventController {
       .innerJoin('events', 'user_event.event_id', 'events.id')
       .where({ 'user.email': email });
   }
+
+  async subscribe({ eventId, userId }) {
+    const userEvent = this.db('user_event')
+      .insert({
+        user_id: userId,
+        event_id: eventId,
+        attended: false,
+        reg_date: new Date(),
+      })
+      .then(() => {
+        this.db('events')
+          .where({ id: eventId })
+          .update({ num_atendees: knex.raw('num_atendees + 1') });
+      });
+
+    return userEvent;
+  }
 }
 
 module.exports = EventController;

@@ -16,7 +16,18 @@ class EventsApi {
     return data.events;
   };
 
-  static subscribe = async (event) => {};
+  static subscribe = async (eventId) => {
+    const { data } = await Axios.put(
+      '/event/subscribe',
+      {
+        eventId: eventId,
+      },
+      {
+        headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+      },
+    );
+    return data;
+  };
 }
 
 export default EventsApi;

@@ -40,6 +40,7 @@ const EventList = ({ subscribed }) => {
               key={index}
               title={event.name}
               description={event.description}
+              eventId={event.id}
             />
           );
         })}
