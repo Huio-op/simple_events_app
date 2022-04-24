@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 const EventCard = ({ title, description }) => {
   return (
     <>
-      <Card sx={{ maxWidth: 500 }}>
+      <Card sx={{ maxWidth: 500, width: '100%' }}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}

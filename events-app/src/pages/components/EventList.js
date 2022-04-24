@@ -3,12 +3,14 @@ import Toast from '../../utils/Toast';
 import Api from '../../api/Api';
 import EventCard from '../components/EventCard';
 
-const EventList = ({ email }) => {
+const EventList = ({ subscribed }) => {
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
     try {
-      const events = await Api.Events.fetchEvents();
+      const events = subscribed
+        ? await Api.Events.findSubscribed()
+        : await Api.Events.fetchEvents();
       setEvents(events);
     } catch (e) {
       console.error(e);
@@ -18,14 +20,27 @@ const EventList = ({ email }) => {
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [subscribed]);
 
   return (
     <>
       <div className="PageCard">
-        {events.map((event) => {
+        {events.length === 0 && subscribed && (
+          <div className="card">
+            <h3>Você não está inscrito em nenhum evento</h3>
+            <h6>
+              Volte para a página de eventos e se inscreva em algum que você
+              gostar
+            </h6>
+          </div>
+        )}
+        {events.map((event, index) => {
           return (
-            <EventCard title={event.name} description={event.description} />
+            <EventCard
+              key={index}
+              title={event.name}
+              description={event.description}
+            />
           );
         })}
       </div>

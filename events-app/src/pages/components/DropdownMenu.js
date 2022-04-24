@@ -1,48 +1,46 @@
-// import React, { useState } from 'react';
-// import Menu from '@mui/material/Menu';
-// import MenuItem from '@mui/material/MenuItem';
+import React, { useState } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import './TopMenuBar.css';
 
-// const DropdownMenu = ({ ButtonComponent, options = [] }) => {
-//   const [anchorEl, setAnchorEl] = useState(false);
-//   const open = !!anchorEl;
-//   const handleClick = (event) => {
-//     setAnchorEl(event.currentTarget);
-//   };
-//   const handleClose = () => {
-//     setAnchorEl(null);
-//   };
+const DropdownMenu = ({ customButton, items = [] }) => {
+  const [anchorEl, setAnchorEl] = useState(false);
 
-//   const renderMenuItems = () => {
-//     return (
-//       <>
-//         {options.map((opt) => {
-//           return <MenuItem onClick={opt.onClick}>{opt.label}</MenuItem>;
-//         })}
-//       </>
-//     );
-//   };
+  const open = !!anchorEl;
 
-//   return (
-//     <>
-//       <ButtonComponent
-//         aria-controls={open ? 'events-menu' : undefined}
-//         aria-haspopup="true"
-//         aria-expanded={open ? 'true' : undefined}
-//         onCLick={handleClick}
-//       ></ButtonComponent>
-//       <Menu
-//         id="events-menu"
-//         anchorEl={anchorEl}
-//         open={open}
-//         onClose={handleClose}
-//         MenuListProps={{
-//           'aria-labelledby': 'events-button',
-//         }}
-//       >
-//         {renderMenuItems()}
-//       </Menu>
-//     </>
-//   );
-// };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-// export default DropdownMenu;
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      {customButton(open, handleClick)}
+      <Menu
+        id="events-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'events-button',
+        }}
+      >
+        {items.map((item, key) => {
+          return (
+            <MenuItem
+              key={`${key} MenuItem`}
+              onClick={() => item.onClick(handleClose)}
+            >
+              {item.label}
+            </MenuItem>
+          );
+        })}
+      </Menu>
+    </>
+  );
+};
+
+export default DropdownMenu;

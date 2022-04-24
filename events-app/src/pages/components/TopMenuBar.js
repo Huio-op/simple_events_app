@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,33 +8,55 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import './TopMenuBar.css';
 import { useNavigate } from 'react-router-dom';
+import DropdownMenu from './DropdownMenu';
 
 const TopMenuBar = () => {
   const navigate = useNavigate();
 
-  const [anchorEl, setAnchorEl] = useState(false);
-  const [anchorEl2, setAnchorEl2] = useState(false);
-  const open = !!anchorEl;
-  const open2 = !!anchorEl2;
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const handleClick2 = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
-  const handleClose2 = () => {
-    setAnchorEl2(null);
-  };
+  const hamburguerMenuOpts = [
+    {
+      label: 'Meus Eventos',
+      onClick: (handleClose) => {
+        navigate('/home/events/subscribed');
+        handleClose();
+      },
+    },
+    {
+      label: 'Todos os Eventos',
+      onClick: (handleClose) => {
+        navigate('/home/events');
+        handleClose();
+      },
+    },
+    {
+      label: 'Certificados',
+      onClick: (handleClose) => {
+        navigate('/home/certificates');
+        handleClose();
+      },
+    },
+  ];
+
+  const profileMenuOpts = [
+    {
+      label: 'Meu cadastro',
+      onClick: (handleClose) => {
+        navigate('/profile');
+        handleClose();
+      },
+    },
+    {
+      label: 'Logout',
+      onClick: (handleClose) => {
+        localStorage.removeItem('ACCESS_TOKEN');
+        navigate('/');
+        handleClose();
+      },
+    },
+  ];
 
   const onClickHome = () => {
     navigate('/home');
-  };
-
-  const onClickProfile = () => {
-    navigate('/profile');
   };
 
   return (
@@ -44,33 +64,27 @@ const TopMenuBar = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className="AppBar" position="static" color="inherit">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              aria-label="events-menu"
-              sx={{ mr: 2 }}
-              id="events-button"
-              className="eventsMenuClass"
-              aria-controls={open2 ? 'events-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open2 ? 'true' : undefined}
-              onClick={handleClick2}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="events-menu"
-              anchorEl={anchorEl2}
-              open={open2}
-              onClose={handleClose2}
-              MenuListProps={{
-                'aria-labelledby': 'events-button',
+            <DropdownMenu
+              items={hamburguerMenuOpts}
+              customButton={(open, handleClick) => {
+                return (
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    aria-label="events-menu"
+                    sx={{ mr: 2 }}
+                    id="events-button"
+                    className="eventsMenuClass"
+                    aria-controls={open ? 'events-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                );
               }}
-            >
-              <MenuItem onClick={handleClose2}>Meus Eventos</MenuItem>
-              <MenuItem onClick={handleClose2}>Todos os Eventos</MenuItem>
-              <MenuItem onClick={handleClose2}>Certificados</MenuItem>
-            </Menu>
+            />
             <div className="menuButton" onClick={onClickHome}>
               <Button variant="h6" sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" component="div">
@@ -78,31 +92,26 @@ const TopMenuBar = () => {
                 </Typography>
               </Button>
             </div>
-            <div className="profileButton">
-              <Button
-                color="inherit"
-                id="basic-button"
-                className="accountButton"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              >
-                Minha conta
-              </Button>
-            </div>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
+            <DropdownMenu
+              items={profileMenuOpts}
+              customButton={(open, handleClick) => {
+                return (
+                  <div className="profileButton">
+                    <Button
+                      color="inherit"
+                      id="basic-button"
+                      className="accountButton"
+                      aria-controls={open ? 'basic-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                      onClick={handleClick}
+                    >
+                      Minha conta
+                    </Button>
+                  </div>
+                );
               }}
-            >
-              <MenuItem onClick={onClickProfile}>Meu cadastro</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+            />
           </Toolbar>
         </AppBar>
       </Box>
