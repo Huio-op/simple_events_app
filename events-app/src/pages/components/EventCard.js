@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Api from '../../api/Api';
 import Toast from '../../utils/Toast';
 
-const EventCard = ({ title, description, eventId }) => {
+const EventCard = ({ title, description, eventId, subscribed }) => {
   const subscribeToEvent = async () => {
     try {
       await Api.Events.subscribe(eventId);
