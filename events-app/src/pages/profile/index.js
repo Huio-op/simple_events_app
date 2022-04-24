@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 import TopMenuBar from '../components/TopMenuBar';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Api from '../../api/Api';
 
 const Profile = () => {
+  const [userValues, setUserValues] = useState({});
   const [fieldValues, setFieldValues] = useState({});
   const [errorsPassword, setErrorsPassword] = useState({});
   const [errorsEmail, setErrorsEmail] = useState({});
   const [helperPassword, setHelperPassword] = useState({});
   const [helperEmail, setHelperEmail] = useState({});
 
-  //TODO: Find a way to get user info using token
+  //TODO setar default values para os campos baseado noq o usuário tem de informação
 
-  const enteringForm = async () => {};
+  useEffect(() => {
+    enteringForm()
+  },[])
+
+  const enteringForm = async () => {
+    console.log("entrou")
+    try { 
+      const {user} = await Api.User.findUser();
+      console.log(user.email);
+      setUserValues({userValues, 
+                      name: user.name,
+                      email: user.email,
+                      phone: user.phone,
+                      country: user.country});
+      return user;
+    } catch (e) {
+      console.log("deu ruim");
+    }
+  };
 
   //TODO: editUser method should make something
   const editUser = async (event) => {
+    console.log(userValues.email);
     event.preventDefault();
     const validPassword = validatePassword();
     const validEmail = validateEmail();
@@ -72,7 +93,7 @@ const Profile = () => {
         <TopMenuBar />
       </div>
       <div className="PageCard">
-        <form onSubmit={editUser}>
+        <form onLoad={enteringForm} onSubmit={editUser}>
           <div className="card">
             <h3>Editar Cadastro</h3>
             <TextField
@@ -83,6 +104,7 @@ const Profile = () => {
             />
             <TextField
               id="email"
+              defaultValue={userValues.email}
               label="E-mail"
               variant="outlined"
               name="email"

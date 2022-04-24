@@ -1,8 +1,10 @@
 import { Axios } from '../Utils';
 
 class UserApi {
-  static findUser = async (email) => {
-    const { data } = await Axios.get('/user', { params: { email: email } });
+  static findUser = async () => {
+    const { data } = await Axios.get('/user', {
+      headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+    });
     return data;
   };
 

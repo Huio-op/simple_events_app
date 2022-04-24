@@ -5,10 +5,11 @@ const ErrorHandler = require('../utils/ErrorHandler');
 const Mailer = require('../utils/Mailer');
 const readProps = require('../utils/readProps');
 const jwt = require('../utils/jwt');
+const checkUser = require('../middlewares/checkUser');
 
 // Encontrar um usuário com o email solicitado
-routes.get('/', async (req, res) => {
-  const { email } = req.query;
+routes.get('/', checkUser, async (req, res) => {
+  const { email } = req.tokenPayload;
   try {
     const controller = new UserController();
     const user = await controller.findOne({ email });
