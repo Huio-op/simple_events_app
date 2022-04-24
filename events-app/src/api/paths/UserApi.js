@@ -1,6 +1,7 @@
 import { Axios } from '../Utils';
 
 class UserApi {
+
   static findUser = async () => {
     const { data } = await Axios.get('/user', {
       headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
@@ -10,9 +11,8 @@ class UserApi {
 
   static userLogin = async (email, password) => {
     const { data } = await Axios.post('/user/login', { email, password });
-    console.log("why tho:", data.token);
     return data;
-  }
+  };
 
   static createUser = async (email, password) => {
     const { data } = await Axios.post('/user', { email, password });

@@ -15,29 +15,30 @@ import { ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 
 const App = () => {
-  const isLoggedIn = () => {
-    const token = localStorage.getItem('ACCESS_TOKEN');
-    let loggedIn;
-    token && token !== '' ? (loggedIn = true) : (loggedIn = false);
+  const token = localStorage.getItem('ACCESS_TOKEN');
+  const loggedIn = token && token !== '';
 
-    return loggedIn;
-  };
   return (
     <Router>
       <>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route
+            path="/"
+            element={
+              loggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />
+            }
+          />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route
             exact
             path="/home/*"
-            element={isLoggedIn() ? <Home /> : <Navigate to="/login" />}
+            element={loggedIn ? <Home /> : <Navigate to="/login" />}
           />
           <Route
             exact
             path="/profile"
-            element={isLoggedIn() ? <Profile /> : <Navigate to="/login" />}
+            element={loggedIn ? <Profile /> : <Navigate to="/login" />}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.css';
 import TopMenuBar from '../components/TopMenuBar';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import EventList from '../components/EventList';
 
 const Home = () => {
@@ -18,7 +13,10 @@ const Home = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/home/events" />} />
         <Route path="/events" element={<EventList />} />
-        <Route path="/userEvents" element={<EventList email="teste" />} />
+        <Route
+          path="/events/subscribed"
+          element={<EventList subscribed={true} />}
+        />
       </Routes>
     </div>
   );

@@ -7,6 +7,16 @@ class EventsApi {
     });
     return data.events;
   };
+
+  static findSubscribed = async () => {
+    const { data } = await Axios.get('/event/subscribed', {
+      headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+    });
+    console.log('veio oqoqoqoq', data);
+    return data.events;
+  };
+
+  static subscribe = async (event) => {};
 }
 
 export default EventsApi;
