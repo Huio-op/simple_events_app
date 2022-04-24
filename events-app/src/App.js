@@ -46,8 +46,11 @@ const App = () => {
             path="/home/*"
             element={loggedIn ? <Home /> : <Navigate to="/login" />}
           />
-          <Route exact path="/profile"
-          element={loggedIn ? <Profile /> : <Navigate to="/login" />} />
+          <Route
+            exact
+            path="/profile"
+            element={loggedIn ? <Profile /> : <Navigate to="/login" />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer
