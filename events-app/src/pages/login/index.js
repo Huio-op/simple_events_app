@@ -16,7 +16,6 @@ const Login = () => {
       const {token} = await Api.User.userLogin(fieldValues.email, fieldValues.password);
       if (token !== null && token !== '') {
         Toast.success('Login feito com sucesso!');
-        console.log('toekekekke', token)
         await localStorage.setItem('ACCESS_TOKEN', token);
         navigate('/home');        
       }
