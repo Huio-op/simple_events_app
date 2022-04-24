@@ -88,7 +88,7 @@ const TopMenuBar = () => {
             <div className="menuButton" onClick={onClickHome}>
               <Button variant="h6" sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" component="div">
-                  Menu
+                  Home
                 </Typography>
               </Button>
             </div>
