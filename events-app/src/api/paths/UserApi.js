@@ -8,7 +8,6 @@ class UserApi {
 
   static createUser = async (email, password) => {
     const { data } = await Axios.post('/user', { email, password });
-    console.log('dadadadada', data);
     return data;
   };
 }

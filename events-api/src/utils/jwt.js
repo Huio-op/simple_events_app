@@ -6,6 +6,6 @@ module.exports = {
   },
 
   verify(token, callback) {
-    jwt.verify(token, process.env.AUTH_SECRET, AUTH_SECRET);
+    jwt.verify(token, process.env.AUTH_SECRET, callback);
   },
 };
