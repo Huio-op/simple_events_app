@@ -109,10 +109,11 @@ const Profile = () => {
             <TextField
               id="email"
               label="E-mail"
+              defaultValue={userValues.email}
               variant="outlined"
               name="email"
               onChange={(e) => {
-                setFieldValues({ ...fieldValues, email: e.target.value });
+                setFieldValues({...fieldValues, email: e.target.value });
               }}
               error={errorsEmail.email}
               helperText={helperEmail.email}
@@ -155,7 +156,7 @@ const Profile = () => {
                 });
               }}
             />
-            <Button className="outlinedButton" variant="outlined" type="submit">
+            <Button className="outlinedButton confirmButton" variant="outlined" type="submit">
               Confirmar
             </Button>
           </div>

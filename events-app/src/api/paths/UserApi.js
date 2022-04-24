@@ -18,6 +18,12 @@ class UserApi {
     const { data } = await Axios.post('/user', { email, password });
     return data;
   };
+
+  static editUser = async (email) => {
+    const { data } = await Axios.put('/user', { email });
+    return data;
+  };
+
 }
 
 export default UserApi;

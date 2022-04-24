@@ -53,3 +53,7 @@
 .eventsMenuClass {
   margin-right: 82.6px !important;
 }
+
+.confirmButton {
+  max-width: 223px;
+}

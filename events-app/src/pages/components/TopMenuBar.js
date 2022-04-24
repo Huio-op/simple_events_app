@@ -9,6 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import './TopMenuBar.css';
 import { useNavigate } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu';
+import ErrorIcon from '@mui/icons-material/Error';
+import Tooltip from '@mui/material/Tooltip';
 
 const TopMenuBar = () => {
   const navigate = useNavigate();
@@ -97,6 +99,11 @@ const TopMenuBar = () => {
               customButton={(open, handleClick) => {
                 return (
                   <div className="profileButton">
+                    <Tooltip title="Por favor, complete seu cadastro">
+                    <IconButton>
+                      <ErrorIcon />
+                    </IconButton>
+                    </Tooltip>
                     <Button
                       color="inherit"
                       id="basic-button"
