@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,7 +9,6 @@ import {
 import Login from './pages/login';
 import Signup from './pages/signup';
 import Home from './pages/home';
-import Profile from './pages/profile';
 import NotFound from './pages/notFound';
 import { ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
@@ -45,11 +44,6 @@ const App = () => {
             exact
             path="/home/*"
             element={loggedIn ? <Home /> : <Navigate to="/login" />}
-          />
-          <Route
-            exact
-            path="/profile"
-            element={loggedIn ? <Profile /> : <Navigate to="/login" />}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

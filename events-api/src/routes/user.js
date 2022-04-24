@@ -85,4 +85,25 @@ routes.post('/', async (req, res) => {
   }
 });
 
+// Editar usuário
+routes.put('/', checkUser, async (req, res) => {
+  const values = req.body;
+  console.log('balulululu', values);
+  let transaction;
+
+  try {
+    transaction = await knex.transaction();
+    const controller = new UserController(transaction);
+
+    const edited = await controller.edit(values);
+
+    await transaction.commit();
+    return res.sendOk(200, { edited });
+  } catch (e) {
+    console.error(e);
+    await transaction.rollback();
+    res.sendError(e);
+  }
+});
+
 module.exports = routes;

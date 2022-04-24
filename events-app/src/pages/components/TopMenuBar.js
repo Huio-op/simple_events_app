@@ -43,7 +43,7 @@ const TopMenuBar = () => {
     {
       label: 'Meu cadastro',
       onClick: (handleClose) => {
-        navigate('/profile');
+        navigate('/home/profile');
         handleClose();
       },
     },
@@ -100,9 +100,9 @@ const TopMenuBar = () => {
                 return (
                   <div className="profileButton">
                     <Tooltip title="Por favor, complete seu cadastro">
-                    <IconButton>
-                      <ErrorIcon />
-                    </IconButton>
+                      <IconButton onClick={() => navigate('/home/profile')}>
+                        <ErrorIcon />
+                      </IconButton>
                     </Tooltip>
                     <Button
                       color="inherit"

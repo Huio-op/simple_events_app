@@ -11,12 +11,10 @@ class EventController {
 
   async fetchEvents() {
     const events = await this.db('events').select();
-    console.log('uauauaua', events);
     return events;
   }
 
   async findSubscribedEvents({ email }) {
-    console.log('email', email);
     return await this.db('user_event')
       .select(
         'events.id',

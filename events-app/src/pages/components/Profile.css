@@ -42,7 +42,7 @@
   float: left;
   padding-left: 15px;
   padding-top: 5px;
-}   
+}
 
 #HeaderRight {
   float: right;
@@ -55,5 +55,9 @@
 }
 
 .confirmButton {
-  max-width: 223px;
+  max-width: 245px;
+}
+
+.disabledEmailField {
+  cursor: not-allowed !important;
 }

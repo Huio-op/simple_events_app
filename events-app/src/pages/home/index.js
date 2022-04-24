@@ -3,6 +3,7 @@ import './index.css';
 import TopMenuBar from '../components/TopMenuBar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import EventList from '../components/EventList';
+import Profile from '../components/Profile';
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
           path="/events/subscribed"
           element={<EventList subscribed={true} />}
         />
+        <Route path="/profile" element={<Profile subscribed={true} />} />
       </Routes>
     </div>
   );

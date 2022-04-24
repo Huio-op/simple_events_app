@@ -33,6 +33,18 @@ class UserController {
     delete newUser.password;
     return newUser;
   }
+
+  async edit({ values }) {
+    const newUser = await this.db('user')
+      .where({ email: values.email })
+      .update({
+        name: values.name || null,
+        phone: values.phone || null,
+        country: values.country || null,
+      });
+
+    return newUser;
+  }
 }
 
 module.exports = UserController;

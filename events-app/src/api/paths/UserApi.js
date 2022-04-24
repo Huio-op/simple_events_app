@@ -1,7 +1,6 @@
 import { Axios } from '../Utils';
 
 class UserApi {
-
   static findUser = async () => {
     const { data } = await Axios.get('/user', {
       headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
@@ -19,11 +18,16 @@ class UserApi {
     return data;
   };
 
-  static editUser = async (email) => {
-    const { data } = await Axios.put('/user', { email });
+  static editUser = async (values) => {
+    const { data } = await Axios.put(
+      '/user',
+      { values },
+      {
+        headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+      },
+    );
     return data;
   };
-
 }
 
 export default UserApi;
