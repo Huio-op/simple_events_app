@@ -47,7 +47,7 @@ const TopMenuBar = () => {
     },
     {
       label: 'Logout',
-      onClick: (handleClose) => {
+      onClick: async (handleClose) => {
         await localStorage.removeItem('ACCESS_TOKEN');
         navigate('/');
         handleClose();
