@@ -25,10 +25,7 @@ routes.get('/', async (req, res) => {
 
 // Realizar login
 routes.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  console.log('aquiiiii', email, password);
-  
+  const { email, password } = req.body;  
   try {
     const controller = new UserController();
     const user = await controller.findOne({

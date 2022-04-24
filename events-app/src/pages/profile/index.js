@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import './index.css';
+import TopMenuBar from '../components/TopMenuBar';
+import EventCard from '../components/EventCard';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Toast from '../../utils/Toast';
 import Api from '../../api/Api';
+
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Profile = () => {
+
   const [fieldValues, setFieldValues] = useState({});
   const [errorsPassword, setErrorsPassword] = useState({});
   const [errorsEmail, setErrorsEmail] = useState({});
@@ -15,42 +19,38 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  const createUser = async (event) => {
+    //TODO: Find a way to get user info using token
+
+  const enteringForm = async () => {
+
+  }
+
+    //TODO: editUser method should make something
+  const editUser = async (event) => {
     event.preventDefault();
     const validPassword = validatePassword();
     const validEmail = validateEmail();
     if (validEmail && validPassword) {
-      try {
-        await Api.User.createUser(fieldValues.email, fieldValues.password);
-        Toast.success('Usuário criado com sucesso!');
-        navigate('/login');
-      } catch (e) {
-        console.log('err', { e });
-        console.error(e);
-        if (e.response?.data.error.status === 409) {
-          Toast.error(e.response?.data.error.message);
-        } else {
-          Toast.error('Erro ao criar usuário!');
-        }
-      }
+      return true
     } else {
       return false;
     }
   };
 
   const validatePassword = () => {
-    if (
-      fieldValues.password === fieldValues.passwordConfirm &&
-      fieldValues.password !== ''
-    ) {
-      setHelperPassword({ password: '' });
-      setErrorsPassword({ ...errorsPassword, password: false, passwordConfirm: false });
-      return true;
+    if (fieldValues.password == '') {
+        return true;
     } else {
-      setHelperPassword({ password: 'As senhas digitadas não coincidem' });
-      setErrorsPassword({ ...errorsPassword, password: true, passwordConfirm: true });
-      console.log('senhas não valido');
-      return false;
+        if (fieldValues.password === fieldValues.passwordConfirm) {
+        setHelperPassword({ password: '' });
+        setErrorsPassword({ ...errorsPassword, password: false, passwordConfirm: false });
+        return true;
+        } else {
+        setHelperPassword({ password: 'As senhas digitadas não coincidem' });
+        setErrorsPassword({ ...errorsPassword, password: true, passwordConfirm: true });
+        console.log('senhas não valido');
+        return false;
+        }
     }
   };
 
@@ -69,10 +69,20 @@ const Signup = () => {
   };
 
   return (
-    <div className="Signup defaultBackground">
-      <form onSubmit={createUser}>
+    <div className="Profile profileBackground">
+      <div className="PageHeader">
+        <TopMenuBar />
+      </div>
+      <div className="PageCard">
+      <form onSubmit={editUser}>
         <div className="card">
-          <h3>Cadastro</h3>
+          <h3>Editar Cadastro</h3>
+          <TextField
+            id="nome"
+            label="Nome Completo"
+            variant="outlined"
+            name="nome"
+          />
           <TextField
             id="email"
             label="E-mail"
@@ -83,6 +93,18 @@ const Signup = () => {
             }}
             error={errorsEmail.email}
             helperText={helperEmail.email}
+          />
+          <TextField
+            id="phone"
+            label="Telefone"
+            variant="outlined"
+            name="phone"
+          />
+          <TextField
+            id="country"
+            label="País"
+            variant="outlined"
+            name="country"
           />
           <TextField
             id="password"
@@ -110,18 +132,14 @@ const Signup = () => {
               });
             }}
           />
-          <Button className="filledButton" variant="contained" type="submit">
-            Cadastrar
-          </Button>
-          <a className="loginRedirect" href="/login">
-            <Button className="outlinedButton" variant="outlined">
-              Voltar para Login
+            <Button className="outlinedButton" variant="outlined" type="submit">
+              Confirmar
             </Button>
-          </a>
         </div>
       </form>
+      </div>
     </div>
   );
 };
 
-export default Signup;
+export default Profile;
