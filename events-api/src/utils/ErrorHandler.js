@@ -2,10 +2,15 @@ const validator = require('./validator');
 
 class ErrorHandler {
   static throwError(code, message) {
-    const error = new Error(message);
-    error.status = code;
+    const error = this.createError(code, message);
     console.error(message);
     throw error;
+  }
+
+  static createError(code, message) {
+    const error = new Error(message);
+    error.status = code;
+    return error;
   }
 
   responseError(res, code = 500, message, error, trace) {

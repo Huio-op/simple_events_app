@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Toast from '../../utils/Toast';
 import Api from '../../api/Api';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [fieldValues, setFieldValues] = useState({});
@@ -11,6 +12,8 @@ const Signup = () => {
   const [errorsEmail, setErrorsEmail] = useState({});
   const [helper, setHelper] = useState({});
   const [helperEmail, setHelperEmail] = useState({});
+
+  const navigate = useNavigate();
 
   const createUser = async (event) => {
     event.preventDefault();
@@ -20,6 +23,7 @@ const Signup = () => {
       try {
         await Api.User.createUser(fieldValues.email, fieldValues.password);
         Toast.success('Usuário criado com sucesso!');
+        navigate('/login');
       } catch (e) {
         console.log('err', { e });
         console.error(e);

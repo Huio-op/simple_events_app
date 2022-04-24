@@ -26,7 +26,7 @@ class UserController {
       return null;
     }
 
-    const newUser = await this.db('user')
+    const [newUser] = await this.db('user')
       .insert({ ...values })
       .returning('*');
 

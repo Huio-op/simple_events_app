@@ -7,7 +7,7 @@ exports.up = async function (knex) {
     t.increments();
     t.string('name', 120);
     t.string('email', 120).notNullable().unique();
-    t.string('password', 120).notNullable();
+    t.string('password').notNullable();
     t.string('country', 45);
     t.string('phone', 25);
     t.boolean('deleted').notNullable().defaultTo(0);
