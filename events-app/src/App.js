@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,6 +22,9 @@ const App = () => {
 
     return loggedIn;
   };
+
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn());
+
   return (
     <Router>
       <>
@@ -29,21 +32,21 @@ const App = () => {
           <Route
             path="/"
             element={
-              isLoggedIn() ? <Navigate to="/home" /> : <Navigate to="/login" />
+              loggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />
             }
           />
-          <Route exact path="/login" element={<Login />} />
+          <Route
+            exact
+            path="/login"
+            element={<Login setLoggedIn={setLoggedIn} />}
+          />
           <Route exact path="/signup" element={<Signup />} />
           <Route
             exact
             path="/home/*"
-            element={isLoggedIn() ? <Home /> : <Navigate to="/login" />}
+            element={loggedIn ? <Home /> : <Navigate to="/login" />}
           />
-          <Route
-            exact
-            path="/profile"
-            element={isLoggedIn() ? <Profile /> : <Navigate to="/login" />}
-          />
+          <Route exact path="/profile" />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer

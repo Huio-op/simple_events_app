@@ -6,7 +6,7 @@ import Api from '../../api/Api';
 import Toast from '../../utils/Toast';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setLoggedIn }) => {
   const [fieldValues, setFieldValues] = useState({});
 
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const Login = () => {
       if (token !== null && token !== '') {
         Toast.success('Login feito com sucesso!');
         await localStorage.setItem('ACCESS_TOKEN', token);
+        setLoggedIn(true);
         navigate('/home');
       }
     } catch (e) {
