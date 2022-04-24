@@ -15,6 +15,8 @@ class EventsApi {
     console.log('veio oqoqoqoq', data);
     return data.events;
   };
+
+  static subscribe = async (event) => {};
 }
 
 export default EventsApi;
