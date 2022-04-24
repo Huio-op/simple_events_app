@@ -31,4 +31,25 @@
   backdrop-filter: blur(14px);
   min-width: 500px;
   max-width: 1080px;
+  margin-top: 2%;
+}
+
+.MuiToolbar-root {
+  background-color: rgb(213 217 220) !important;
+}
+
+#HeaderLeft {
+  float: left;
+  padding-left: 15px;
+  padding-top: 5px;
+}   
+
+#HeaderRight {
+  float: right;
+  padding-right: 15px;
+  padding-top: 5px;
+}
+
+.eventsMenuClass {
+  margin-right: 82.6px !important;
 }
