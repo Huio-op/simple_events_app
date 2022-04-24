@@ -24,8 +24,11 @@ routes.get('/', async (req, res) => {
 });
 
 // Realizar login
-routes.get('/login', async (req, res) => {
-  const { email, password } = req.query;
+routes.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log('aquiiiii', email, password);
+  
   try {
     const controller = new UserController();
     const user = await controller.findOne({
@@ -39,6 +42,7 @@ routes.get('/login', async (req, res) => {
     token = jwt.generate({ email });
     return res.sendOk(200, { token });
   } catch (e) {
+    console.log("5 - ", e);
     return res.sendError(e);
   }
 });

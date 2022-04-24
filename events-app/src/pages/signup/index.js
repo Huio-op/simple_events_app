@@ -28,7 +28,7 @@ const Signup = () => {
         console.log('err', { e });
         console.error(e);
         if (e.response?.data.error.status === 409) {
-          Toast.error('Usuário já cadastrado!');
+          Toast.error(e.response?.data.error.message);
         } else {
           Toast.error('Erro ao criar usuário!');
         }
