@@ -14,18 +14,14 @@ import { ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 
 const App = () => {
-
   const isLoggedIn = () => {
-const token = localStorage.getItem("ACCESS_TOKEN");
+    const token = localStorage.getItem('ACCESS_TOKEN');
     console.log('como vem????', token);
     let loggedIn;
-    token && token !== '' 
-      ? loggedIn =  true 
-      : loggedIn =  false;
+    token && token !== '' ? (loggedIn = true) : (loggedIn = false);
 
     return loggedIn;
-
-  }
+  };
   return (
     <Router>
       <>
@@ -33,7 +29,11 @@ const token = localStorage.getItem("ACCESS_TOKEN");
           <Route path="/" element={<Navigate to="/login" />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
-          <Route exact path="/home" element={isLoggedIn() ? <Home /> : <Navigate to="/login" /> } /> 
+          <Route
+            exact
+            path="/home/*"
+            element={isLoggedIn() ? <Home /> : <Navigate to="/login" />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer
