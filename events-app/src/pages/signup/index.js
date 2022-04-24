@@ -28,7 +28,7 @@ const Signup = () => {
         console.log('err', { e });
         console.error(e);
         if (e.response?.data.error.status === 409) {
-          Toast.error(e.response?.data.error.message);
+          Toast.error(e.response?.data.message);
         } else {
           Toast.error('Erro ao criar usuário!');
         }
@@ -44,11 +44,19 @@ const Signup = () => {
       fieldValues.password !== ''
     ) {
       setHelperPassword({ password: '' });
-      setErrorsPassword({ ...errorsPassword, password: false, passwordConfirm: false });
+      setErrorsPassword({
+        ...errorsPassword,
+        password: false,
+        passwordConfirm: false,
+      });
       return true;
     } else {
       setHelperPassword({ password: 'As senhas digitadas não coincidem' });
-      setErrorsPassword({ ...errorsPassword, password: true, passwordConfirm: true });
+      setErrorsPassword({
+        ...errorsPassword,
+        password: true,
+        passwordConfirm: true,
+      });
       console.log('senhas não valido');
       return false;
     }

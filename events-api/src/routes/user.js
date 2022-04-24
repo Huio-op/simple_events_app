@@ -25,7 +25,7 @@ routes.get('/', async (req, res) => {
 
 // Realizar login
 routes.post('/login', async (req, res) => {
-  const { email, password } = req.body;  
+  const { email, password } = req.body;
   try {
     const controller = new UserController();
     const user = await controller.findOne({
@@ -39,7 +39,7 @@ routes.post('/login', async (req, res) => {
     token = jwt.generate({ email });
     return res.sendOk(200, { token });
   } catch (e) {
-    console.log("5 - ", e);
+    console.log('5 - ', e);
     return res.sendError(e);
   }
 });
@@ -51,17 +51,27 @@ routes.post('/', async (req, res) => {
   let transaction;
 
   try {
+    const controller = new UserController();
+    const createdUser = await controller.findOne({ email });
+    console.log('crearearea', createdUser);
+    if (createdUser) {
+      ErrorHandler.throwError(409, readProps('user_already_created'));
+    }
+  } catch (e) {
+    res.sendError(e);
+    return false;
+  }
+
+  try {
     transaction = await knex.transaction();
     const controller = new UserController(transaction);
+
     const user = await controller.create({
       email,
       password,
     });
 
-    if (!user) {
-      ErrorHandler.throwError(409, 'user_already_created');
-    }
-    const token = jwt.generate({ email });
+    const token = jwt.generate({ email: user.email });
     await transaction.commit();
 
     const mailer = new Mailer();
@@ -69,7 +79,6 @@ routes.post('/', async (req, res) => {
 
     return res.sendOk(201, { token });
   } catch (e) {
-    console.error(e);
     await transaction.rollback();
     res.sendError(e);
   }

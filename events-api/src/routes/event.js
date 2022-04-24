@@ -13,6 +13,7 @@ routes.get('/', checkUser, async (req, res) => {
 
     return res.sendOk(200, { events });
   } catch (e) {
+    console.error(e);
     return res.sendError(e);
   }
 });

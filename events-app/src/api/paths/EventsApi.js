@@ -1,9 +1,11 @@
 import { Axios } from '../Utils';
 
 class EventsApi {
-  static fetchEvents = async (email) => {
-    const { data } = await Axios.get('/events');
-    return data;
+  static fetchEvents = async () => {
+    const { data } = await Axios.get('/event', {
+      headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+    });
+    return data.events;
   };
 }
 

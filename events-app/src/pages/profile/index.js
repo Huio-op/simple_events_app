@@ -1,56 +1,54 @@
 import React, { useState } from 'react';
 import './index.css';
 import TopMenuBar from '../components/TopMenuBar';
-import EventCard from '../components/EventCard';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Toast from '../../utils/Toast';
-import Api from '../../api/Api';
-
-import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-
   const [fieldValues, setFieldValues] = useState({});
   const [errorsPassword, setErrorsPassword] = useState({});
   const [errorsEmail, setErrorsEmail] = useState({});
   const [helperPassword, setHelperPassword] = useState({});
   const [helperEmail, setHelperEmail] = useState({});
 
-  const navigate = useNavigate();
+  //TODO: Find a way to get user info using token
 
-    //TODO: Find a way to get user info using token
+  const enteringForm = async () => {};
 
-  const enteringForm = async () => {
-
-  }
-
-    //TODO: editUser method should make something
+  //TODO: editUser method should make something
   const editUser = async (event) => {
     event.preventDefault();
     const validPassword = validatePassword();
     const validEmail = validateEmail();
     if (validEmail && validPassword) {
-      return true
+      return true;
     } else {
       return false;
     }
   };
 
   const validatePassword = () => {
-    if (fieldValues.password == '') {
-        return true;
+    if (fieldValues.password === '') {
+      return true;
     } else {
-        if (fieldValues.password === fieldValues.passwordConfirm) {
+      if (fieldValues.password === fieldValues.passwordConfirm) {
         setHelperPassword({ password: '' });
-        setErrorsPassword({ ...errorsPassword, password: false, passwordConfirm: false });
+        setErrorsPassword({
+          ...errorsPassword,
+          password: false,
+          passwordConfirm: false,
+        });
         return true;
-        } else {
+      } else {
         setHelperPassword({ password: 'As senhas digitadas não coincidem' });
-        setErrorsPassword({ ...errorsPassword, password: true, passwordConfirm: true });
+        setErrorsPassword({
+          ...errorsPassword,
+          password: true,
+          passwordConfirm: true,
+        });
         console.log('senhas não valido');
         return false;
-        }
+      }
     }
   };
 
@@ -74,69 +72,69 @@ const Profile = () => {
         <TopMenuBar />
       </div>
       <div className="PageCard">
-      <form onSubmit={editUser}>
-        <div className="card">
-          <h3>Editar Cadastro</h3>
-          <TextField
-            id="nome"
-            label="Nome Completo"
-            variant="outlined"
-            name="nome"
-          />
-          <TextField
-            id="email"
-            label="E-mail"
-            variant="outlined"
-            name="email"
-            onChange={(e) => {
-              setFieldValues({ ...fieldValues, email: e.target.value });
-            }}
-            error={errorsEmail.email}
-            helperText={helperEmail.email}
-          />
-          <TextField
-            id="phone"
-            label="Telefone"
-            variant="outlined"
-            name="phone"
-          />
-          <TextField
-            id="country"
-            label="País"
-            variant="outlined"
-            name="country"
-          />
-          <TextField
-            id="password"
-            label="Senha"
-            name="password"
-            variant="outlined"
-            type="password"
-            error={errorsPassword.password}
-            helperText={helperPassword.password}
-            onChange={(e) => {
-              setFieldValues({ ...fieldValues, password: e.target.value });
-            }}
-          />
-          <TextField
-            id="passwordConfirm"
-            label="Confirme sua senha"
-            name="password"
-            variant="outlined"
-            type="password"
-            error={errorsPassword.passwordConfirm}
-            onChange={(e) => {
-              setFieldValues({
-                ...fieldValues,
-                passwordConfirm: e.target.value,
-              });
-            }}
-          />
+        <form onSubmit={editUser}>
+          <div className="card">
+            <h3>Editar Cadastro</h3>
+            <TextField
+              id="nome"
+              label="Nome Completo"
+              variant="outlined"
+              name="nome"
+            />
+            <TextField
+              id="email"
+              label="E-mail"
+              variant="outlined"
+              name="email"
+              onChange={(e) => {
+                setFieldValues({ ...fieldValues, email: e.target.value });
+              }}
+              error={errorsEmail.email}
+              helperText={helperEmail.email}
+            />
+            <TextField
+              id="phone"
+              label="Telefone"
+              variant="outlined"
+              name="phone"
+            />
+            <TextField
+              id="country"
+              label="País"
+              variant="outlined"
+              name="country"
+            />
+            <TextField
+              id="password"
+              label="Senha"
+              name="password"
+              variant="outlined"
+              type="password"
+              error={errorsPassword.password}
+              helperText={helperPassword.password}
+              onChange={(e) => {
+                setFieldValues({ ...fieldValues, password: e.target.value });
+              }}
+            />
+            <TextField
+              id="passwordConfirm"
+              label="Confirme sua senha"
+              name="password"
+              variant="outlined"
+              type="password"
+              error={errorsPassword.passwordConfirm}
+              onChange={(e) => {
+                setFieldValues({
+                  ...fieldValues,
+                  passwordConfirm: e.target.value,
+                });
+              }}
+            />
             <Button className="outlinedButton" variant="outlined" type="submit">
               Confirmar
             </Button>
-        </div>
-      </form>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -17,9 +17,7 @@ class ErrorHandler {
     if (validator.checkRequestParams({ message, error }).length > 0) {
       return res.status(code || 500).json({
         error: this.getCodeMessage(0),
-        message: this.translator.translate(
-          'Ocorreu um erro ao realizar a requisição.',
-        ),
+        message: 'Ocorreu um erro ao realizar a requisição.',
       });
     }
 

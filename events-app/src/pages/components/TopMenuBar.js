@@ -8,13 +8,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import DropdownMenu from './DropdownMenu';
-import _ from 'lodash';
 import './TopMenuBar.css';
 import { useNavigate } from 'react-router-dom';
 
 const TopMenuBar = () => {
-
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(false);
@@ -36,13 +33,11 @@ const TopMenuBar = () => {
 
   const onClickHome = () => {
     navigate('/home');
-  }
+  };
 
   const onClickProfile = () => {
     navigate('/profile');
-  }
-
-
+  };
 
   return (
     <>
@@ -77,23 +72,24 @@ const TopMenuBar = () => {
               <MenuItem onClick={handleClose2}>Certificados</MenuItem>
             </Menu>
             <div className="menuButton" onClick={onClickHome}>
-            <Button
-             variant="h6" sx={{ flexGrow: 1 }}>
-              <Typography variant="h6" component="div">Menu</Typography>              
-            </Button>
+              <Button variant="h6" sx={{ flexGrow: 1 }}>
+                <Typography variant="h6" component="div">
+                  Menu
+                </Typography>
+              </Button>
             </div>
             <div className="profileButton">
-            <Button
-              color="inherit"
-              id="basic-button"
-              className="accountButton"
-              aria-controls={open ? 'basic-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-            >
-              Minha conta
-            </Button>
+              <Button
+                color="inherit"
+                id="basic-button"
+                className="accountButton"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+                Minha conta
+              </Button>
             </div>
             <Menu
               id="basic-menu"
