@@ -13,11 +13,14 @@ const Login = () => {
 
   const validateLogin = async () => {
     try {
-      const {token} = await Api.User.userLogin(fieldValues.email, fieldValues.password);
+      const { token } = await Api.User.userLogin(
+        fieldValues.email,
+        fieldValues.password,
+      );
       if (token !== null && token !== '') {
         Toast.success('Login feito com sucesso!');
         await localStorage.setItem('ACCESS_TOKEN', token);
-        navigate('/home');        
+        navigate('/home');
       }
     } catch (e) {
       console.log('err', { e });
@@ -27,7 +30,7 @@ const Login = () => {
         Toast.error('Falha no login!');
       }
     }
-  }
+  };
 
   return (
     <div className="Login defaultBackground">
@@ -51,7 +54,11 @@ const Login = () => {
             setFieldValues({ ...fieldValues, password: e.currentTarget.value })
           }
         />
-        <Button className="filledButton" variant="contained" onClick={validateLogin}>
+        <Button
+          className="filledButton"
+          variant="contained"
+          onClick={validateLogin}
+        >
           Login
         </Button>
         <a className="signupRedirect" href="/signup">

@@ -15,9 +15,13 @@ import { ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 
 const App = () => {
-  const token = localStorage.getItem('ACCESS_TOKEN');
-  const loggedIn = token && token !== '';
+  const isLoggedIn = () => {
+    const token = localStorage.getItem('ACCESS_TOKEN');
+    let loggedIn;
+    token && token !== '' ? (loggedIn = true) : (loggedIn = false);
 
+    return loggedIn;
+  };
   return (
     <Router>
       <>
@@ -25,7 +29,7 @@ const App = () => {
           <Route
             path="/"
             element={
-              loggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />
+              isLoggedIn() ? <Navigate to="/home" /> : <Navigate to="/login" />
             }
           />
           <Route exact path="/login" element={<Login />} />
@@ -33,12 +37,12 @@ const App = () => {
           <Route
             exact
             path="/home/*"
-            element={loggedIn ? <Home /> : <Navigate to="/login" />}
+            element={isLoggedIn() ? <Home /> : <Navigate to="/login" />}
           />
           <Route
             exact
             path="/profile"
-            element={loggedIn ? <Profile /> : <Navigate to="/login" />}
+            element={isLoggedIn() ? <Profile /> : <Navigate to="/login" />}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
