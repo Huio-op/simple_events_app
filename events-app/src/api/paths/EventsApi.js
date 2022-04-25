@@ -40,16 +40,16 @@ class EventsApi {
   };
 
   static findCertificate = async (eventId) => {
+    console.log("aqui");
     const { data } = await Axios.get(
       '/event/certificate',
       {
-        eventId: eventId,
-      },
-      {
+        params: {eventId: eventId},
         headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
       },
     );
-    return data;
+    console.log("data", data);
+    return data.certToken;
   };
 }
 

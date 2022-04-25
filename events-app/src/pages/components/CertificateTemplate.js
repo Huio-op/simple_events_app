@@ -6,9 +6,19 @@ import Api from '../../api/Api';
 import { Tooltip } from '@mui/material';
 import Toast from '../../utils/Toast';
 
-const CertificateTemplate = ({}) => {
-    
-    const [userValues, setUserValues] = useState({});
+import { useParams } from 'react-router-dom';
+
+const CertificateTemplate = ({ ...props }) => {
+
+  const { id } = useParams();
+  const [event, setEvent] = useState({});    
+  const [userValues, setUserValues] = useState({});
+  const [token, setToken] = useState('');
+
+  const fetchEvent = async () => {
+    const event = await Api.Events.findEvent(id);
+    setEvent(event);
+  };
 
   const fetchUser = async () => {
     try {
@@ -27,8 +37,23 @@ const CertificateTemplate = ({}) => {
     }
   };
 
+  const generateCertificate = async () => {
+
+    try {
+      const token  = await Api.Events.findCertificate(id);
+      console.log('aaaaaaaaaaaaa', token)
+      setToken(token);
+    } catch (e) {
+      Toast.error("Não foi possível gerar o token");
+      console.log(e);
+    }
+
+  };
+
   useEffect(() => {
     fetchUser();
+    fetchEvent();
+    generateCertificate();
   }, []);
 
   return (
@@ -39,10 +64,12 @@ const CertificateTemplate = ({}) => {
             <h6>
                 Este certificado garante que {userValues.name} participou no evento
             </h6>
-            <h4>Festa a fantasia</h4>
-            <h6>Esse evento ocorreu em: 16/04/2022</h6>
+            <h4>{event.name}</h4>
+            <h6>Esse evento ocorreu em {event.date}</h6>
             <h6>Código único do certificado:</h6>
-            <h5>DAOSIJD8912JD9013J2KD0913KD901J9DIJWI9HDJN</h5>
+            <div className="tokenClass">
+              <h5>{token}</h5>
+            </div>
           </div>
           <Button
             className="filledButton confirmEmailButton"

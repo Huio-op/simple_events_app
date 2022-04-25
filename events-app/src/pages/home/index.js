@@ -6,6 +6,7 @@ import EventList from '../components/EventList';
 import Profile from '../components/Profile';
 import CertificateTemplate from '../components/CertificateTemplate';
 import EventDetailed from '../components/EventDetailed';
+import CertificateValidation from '../components/CertificateValidation';
 
 const Home = () => {
   return (
@@ -25,8 +26,9 @@ const Home = () => {
           path="/events/certificate"
           element={<EventList pastEvents={true} />}
         />
-        <Route path="/certificate" element={<CertificateTemplate />} />
+        <Route path="/certificate/:id" element={<CertificateTemplate />} />
         <Route path="/events/detailed/:id" element={<EventDetailed />} />
+        <Route path="/validation" element={<CertificateValidation />} />
       </Routes>
     </div>
   );

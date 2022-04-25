@@ -62,6 +62,13 @@ const TopMenuBar = () => {
         handleClose();
       },
     },
+    {
+      label: 'Validação de Certificados',
+      onClick: (handleClose) => {
+        navigate('/home/validation');
+        handleClose();
+      },
+    }
   ];
 
   const profileMenuOpts = [
