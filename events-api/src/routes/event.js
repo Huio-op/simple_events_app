@@ -34,9 +34,9 @@ routes.get('/subscribed', checkUser, async (req, res) => {
 
   try {
     const controller = new EventController();
-    const events = await controller.findSubscribedEvents({ email });
+    let events = await controller.findSubscribedEvents({ email });
 
-    events.map((event) => {
+    events = events.map((event) => {
       return { ...event, subscribed: true };
     });
 
