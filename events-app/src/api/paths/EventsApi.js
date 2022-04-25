@@ -35,20 +35,16 @@ class EventsApi {
       params: { eventId },
       headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
     });
-    console.log('daaaaaa', data);
     return data.event;
   };
 
   static findCertificate = async (eventId) => {
-    console.log("aqui");
-    const { data } = await Axios.get(
-      '/event/certificate',
-      {
-        params: {eventId: eventId},
-        headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
-      },
-    );
-    console.log("data", data);
+    console.log('aqui');
+    const { data } = await Axios.get('/event/certificate', {
+      params: { eventId: eventId },
+      headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+    });
+    console.log('data', data);
     return data.certToken;
   };
 }

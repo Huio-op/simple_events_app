@@ -93,12 +93,15 @@ routes.get('/certificate', checkUser, async (req, res) => {
 });
 
 routes.get('/detailed', checkUser, async (req, res) => {
+  const { email } = req.tokenPayload;
   const { eventId } = req.query;
 
   try {
+    const user = await new UserController().findOne({ email });
+
     const controller = new EventController();
 
-    const event = await controller.findOne({ id: eventId });
+    const event = await controller.findOne({ id: eventId }, user.id);
     console.log('achooo', event);
 
     return res.sendOk(200, { event });

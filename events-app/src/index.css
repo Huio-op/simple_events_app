@@ -55,3 +55,11 @@ code {
 .outlinedButton:hover {
   border-color: #2e4052 !important;
 }
+
+.centeredPageWrapper {
+  width: 100%;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

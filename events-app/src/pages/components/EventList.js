@@ -59,12 +59,14 @@ const EventList = ({ subscribed, pastEvents }) => {
           ? await Api.Events.findSubscribed()
           : await Api.Events.fetchEvents();
 
-      events = events.filter((event) => {
-        const eventDate = new Date(event.date);
-        const hasPassed = eventDate < dataAtual;
-        event.passed = hasPassed;
-        return pastEvents ? hasPassed : true;
-      });
+      events = events
+        .filter((event) => {
+          const eventDate = new Date(event.date);
+          const hasPassed = eventDate < dataAtual;
+          event.passed = hasPassed;
+          return pastEvents ? hasPassed : true;
+        })
+        .sort((a, b) => a.date < b.date);
 
       if (subscribed) {
         events = events.filter((event) => {

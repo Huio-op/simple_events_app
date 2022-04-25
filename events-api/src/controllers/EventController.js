@@ -11,8 +11,19 @@ class EventController {
     }
   }
 
-  async findOne(values) {
+  async findOne(values, userId) {
+    console.log('valu', values, userId);
     const event = await this.db('events').where(values).first();
+    if (userId) {
+      const userEvent = await this.db('user_event')
+        .select('user_event.id')
+        .where({ user_id: userId, event_id: event.id })
+        .first();
+      if (userEvent) {
+        event.subscribed = true;
+      }
+    }
+
     return event;
   }
 
@@ -59,7 +70,7 @@ class EventController {
       const event = await this.findOne({ id: eventId });
       await this.db('events')
         .where({ id: eventId })
-        .update({ name: 'teste', num_atendees: event.num_atendees - 1 });
+        .update({ num_atendees: event.num_atendees - 1 });
     }
 
     return userEvent;
