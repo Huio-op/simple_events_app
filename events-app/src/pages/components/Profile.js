@@ -5,15 +5,19 @@ import Button from '@mui/material/Button';
 import Api from '../../api/Api';
 import { Tooltip } from '@mui/material';
 import Toast from '../../utils/Toast';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+
+  const navigate = useNavigate();
+
   const [userValues, setUserValues] = useState({});
   const [errorsPassword, setErrorsPassword] = useState({});
   const [errorsEmail, setErrorsEmail] = useState({});
   const [helperPassword, setHelperPassword] = useState({});
   const [helperEmail, setHelperEmail] = useState({});
 
-  //TODO setar default values para os campos baseado noq o usuário tem de informação
+
 
   const fetchUser = async () => {
     console.log('entrou');
@@ -37,7 +41,6 @@ const Profile = () => {
     fetchUser();
   }, []);
 
-  //TODO: editUser method should make something
   const editUser = async (event) => {
     console.log(userValues);
     event.preventDefault();
@@ -46,6 +49,7 @@ const Profile = () => {
       try {
         const newUser = await Api.User.editUser(userValues);
         Toast.success('Usuário editado com sucesso!');
+        navigate('/home/events');
       } catch (e) {
         console.error(e);
         Toast.error('Erro ao editar usuário!');

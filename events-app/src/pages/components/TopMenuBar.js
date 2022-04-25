@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,9 +11,34 @@ import { useNavigate } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu';
 import ErrorIcon from '@mui/icons-material/Error';
 import Tooltip from '@mui/material/Tooltip';
+import Api from '../../api/Api';
+import Toast from '../../utils/Toast';
 
 const TopMenuBar = () => {
   const navigate = useNavigate();
+
+  const [userValues, setUserValues] = useState({});
+
+  const fetchUser = async () => {
+    try {
+      const { user } = await Api.User.findUser();
+      console.log(user.email);
+      setUserValues({
+        ...userValues,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        country: user.country,
+      });
+      return user;
+    } catch (e) {
+      Toast.error("Não foi possível pegar as informações do usuário");
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const hamburguerMenuOpts = [
     {
@@ -99,11 +124,13 @@ const TopMenuBar = () => {
               customButton={(open, handleClick) => {
                 return (
                   <div className="profileButton">
+                    {(userValues.name == null || userValues.phone == null || userValues.country == null) &&
                     <Tooltip title="Por favor, complete seu cadastro">
                       <IconButton onClick={() => navigate('/home/profile')}>
                         <ErrorIcon />
                       </IconButton>
                     </Tooltip>
+                    }
                     <Button
                       color="inherit"
                       id="basic-button"
