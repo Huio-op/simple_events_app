@@ -3,14 +3,30 @@ import Toast from '../../utils/Toast';
 import Api from '../../api/Api';
 import EventCard from '../components/EventCard';
 
-const EventList = ({ subscribed }) => {
+const EventList = ({ subscribed, pastEvents }) => {
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
     try {
-      const events = subscribed
+      const dataAtual = new Date;
+      let events = subscribed || pastEvents
         ? await Api.Events.findSubscribed()
         : await Api.Events.fetchEvents();
+
+          events = events.filter((event) => {
+            const eventDate = new Date(event.date);
+            const hasPassed = eventDate < dataAtual;
+            event.passed = hasPassed; 
+            return pastEvents ? hasPassed : true
+          });
+
+      if (subscribed) {
+        events = events.filter((event) => {
+          const eventDate = new Date(event.date);
+          return eventDate > dataAtual
+        });
+      }
+
       setEvents(events);
     } catch (e) {
       console.error(e);
@@ -20,7 +36,7 @@ const EventList = ({ subscribed }) => {
 
   useEffect(() => {
     fetchEvents();
-  }, [subscribed]);
+  }, [subscribed, pastEvents]);
 
   return (
     <>
@@ -43,6 +59,7 @@ const EventList = ({ subscribed }) => {
               eventId={event.id}
               subscribed={event.subscribed}
               onToggle={fetchEvents}
+              pastEvent={event.passed}
             />
           );
         })}

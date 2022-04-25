@@ -17,13 +17,6 @@ const TopMenuBar = () => {
 
   const hamburguerMenuOpts = [
     {
-      label: 'Meus Eventos',
-      onClick: (handleClose) => {
-        navigate('/home/events/subscribed');
-        handleClose();
-      },
-    },
-    {
       label: 'Todos os Eventos',
       onClick: (handleClose) => {
         navigate('/home/events');
@@ -31,9 +24,16 @@ const TopMenuBar = () => {
       },
     },
     {
+      label: 'Eventos ativos',
+      onClick: (handleClose) => {
+        navigate('/home/events/subscribed');
+        handleClose();
+      },
+    },
+    {
       label: 'Certificados',
       onClick: (handleClose) => {
-        navigate('/home/certificates');
+        navigate('/home/events/certificate');
         handleClose();
       },
     },
