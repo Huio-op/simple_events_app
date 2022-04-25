@@ -29,6 +29,15 @@ class EventsApi {
     );
     return data;
   };
+
+  static findEvent = async (eventId) => {
+    const { data } = await Axios.get('/event/detailed', {
+      params: { eventId },
+      headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+    });
+    console.log('daaaaaa', data);
+    return data.event;
+  };
 }
 
 export default EventsApi;

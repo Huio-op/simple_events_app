@@ -92,4 +92,20 @@ routes.get('/certificate', checkUser, async (req, res) => {
   }
 });
 
+routes.get('/detailed', checkUser, async (req, res) => {
+  const { eventId } = req.query;
+
+  try {
+    const controller = new EventController();
+
+    const event = await controller.findOne({ id: eventId });
+    console.log('achooo', event);
+
+    return res.sendOk(200, { event });
+  } catch (e) {
+    console.error(e);
+    return res.sendError(e);
+  }
+});
+
 module.exports = routes;

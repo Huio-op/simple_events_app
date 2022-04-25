@@ -4,7 +4,6 @@ const readProps = require('../utils/readProps');
 
 async function checkAuth(req, res, next) {
   const token = req.headers.authorization;
-  console.log('tokeke', token);
 
   if (!token) {
     return res.sendError(

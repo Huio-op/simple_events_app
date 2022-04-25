@@ -8,22 +8,23 @@ const EventList = ({ subscribed, pastEvents }) => {
 
   const fetchEvents = async () => {
     try {
-      const dataAtual = new Date;
-      let events = subscribed || pastEvents
-        ? await Api.Events.findSubscribed()
-        : await Api.Events.fetchEvents();
+      const dataAtual = new Date();
+      let events =
+        subscribed || pastEvents
+          ? await Api.Events.findSubscribed()
+          : await Api.Events.fetchEvents();
 
-          events = events.filter((event) => {
-            const eventDate = new Date(event.date);
-            const hasPassed = eventDate < dataAtual;
-            event.passed = hasPassed; 
-            return pastEvents ? hasPassed : true
-          });
+      events = events.filter((event) => {
+        const eventDate = new Date(event.date);
+        const hasPassed = eventDate < dataAtual;
+        event.passed = hasPassed;
+        return pastEvents ? hasPassed : true;
+      });
 
       if (subscribed) {
         events = events.filter((event) => {
           const eventDate = new Date(event.date);
-          return eventDate > dataAtual
+          return eventDate > dataAtual;
         });
       }
 
@@ -51,17 +52,7 @@ const EventList = ({ subscribed, pastEvents }) => {
           </div>
         )}
         {events.map((event, index) => {
-          return (
-            <EventCard
-              key={index}
-              title={event.name}
-              description={event.description}
-              eventId={event.id}
-              subscribed={event.subscribed}
-              onToggle={fetchEvents}
-              pastEvent={event.passed}
-            />
-          );
+          return <EventCard key={index} event={event} onToggle={fetchEvents} />;
         })}
       </div>
     </>

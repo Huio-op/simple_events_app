@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import EventList from '../components/EventList';
 import Profile from '../components/Profile';
 import CertificateTemplate from '../components/CertificateTemplate';
+import EventDetailed from '../components/EventDetailed';
 
 const Home = () => {
   return (
@@ -20,8 +21,12 @@ const Home = () => {
           element={<EventList subscribed={true} />}
         />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/events/certificate" element={<EventList pastEvents={true} />} />
+        <Route
+          path="/events/certificate"
+          element={<EventList pastEvents={true} />}
+        />
         <Route path="/certificate" element={<CertificateTemplate />} />
+        <Route path="/events/detailed/:id" element={<EventDetailed />} />
       </Routes>
     </div>
   );

@@ -7,15 +7,18 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Api from '../../api/Api';
 import Toast from '../../utils/Toast';
+import { useNavigate } from 'react-router-dom';
 
-const EventCard = ({ title, description, eventId, subscribed, onToggle, pastEvent }) => {
+const EventCard = ({ event, onToggle }) => {
+  const navigate = useNavigate();
+
   const toggleSubscribe = async () => {
     try {
-      await Api.Events.toggleSubscribe(eventId, !subscribed);
-      if (subscribed) { 
-        Toast.success(`Inscrição no evento ${title} cancelada!`);
+      await Api.Events.toggleSubscribe(event.id, !event.subscribed);
+      if (event.subscribed) {
+        Toast.success(`Inscrição no evento ${event.name} cancelada!`);
       } else {
-        Toast.success(`Inscrição no evento ${title} confirmada!`);
+        Toast.success(`Inscrição no evento ${event.name} confirmada!`);
       }
       await onToggle();
     } catch (e) {
@@ -24,35 +27,47 @@ const EventCard = ({ title, description, eventId, subscribed, onToggle, pastEven
     }
   };
 
-  const generateCertificate = () => {
+  const showEventDetailed = () => {
+    navigate(`/home/events/detailed/${event.id}`);
+  };
 
-  }
+  const generateCertificate = () => {};
 
   return (
     <>
       <Card sx={{ maxWidth: 500, width: '100%' }}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {title}
+            {event.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {description}
+            {event.description}
           </Typography>
         </CardContent>
         <CardActions>
-          {(!pastEvent || pastEvent && subscribed) && 
-          <Button
-            className={`${
-              subscribed && !pastEvent ? 'outlinedButton' : 'filledButton'
-            } confirmButton`}
-            variant={subscribed && !pastEvent ? 'outlined' : 'contained'}
-            size="small"
-            onClick={pastEvent ? generateCertificate : toggleSubscribe}
-          >
-            {pastEvent ? 'Certificado' : subscribed ? 'Desinscrever-se' : 'Inscrever-se'}
+          {(!event.passed || (event.passed && event.subscribed)) && (
+            <Button
+              className={`${
+                event.subscribed && !event.passed
+                  ? 'outlinedButton'
+                  : 'filledButton'
+              } confirmButton`}
+              variant={
+                event.subscribed && !event.passed ? 'outlined' : 'contained'
+              }
+              size="small"
+              onClick={event.passed ? generateCertificate : toggleSubscribe}
+            >
+              {event.passed
+                ? 'Certificado'
+                : event.subscribed
+                ? 'Desinscrever-se'
+                : 'Inscrever-se'}
+            </Button>
+          )}
+          <Button size="small" onClick={showEventDetailed}>
+            Saiba mais
           </Button>
-          }
-          <Button size="small">Saiba mais</Button>
         </CardActions>
       </Card>
     </>
