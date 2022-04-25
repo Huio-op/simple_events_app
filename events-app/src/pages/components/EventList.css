@@ -1,4 +1,10 @@
 .SearchComponent {
   width: 100% !important;
   margin-left: 0 !important;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.SearchComponent input {
+  width: 48ch !important;
 }

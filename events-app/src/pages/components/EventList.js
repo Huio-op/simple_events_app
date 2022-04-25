@@ -87,6 +87,16 @@ const EventList = ({ subscribed, pastEvents }) => {
   return (
     <>
       <div className="PageCard">
+        <Search className="SearchComponent">
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            className="SearchInputField"
+            placeholder="Search…"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
         {events.length === 0 && subscribed && (
           <div className="card">
             <h3>Você não está inscrito em nenhum evento</h3>
@@ -96,15 +106,6 @@ const EventList = ({ subscribed, pastEvents }) => {
             </h6>
           </div>
         )}
-        <Search className="SearchComponent">
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Search>
         {events.map((event, index) => {
           return <EventCard key={index} event={event} onToggle={fetchEvents} />;
         })}

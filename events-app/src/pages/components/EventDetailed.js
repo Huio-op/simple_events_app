@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Api from '../../api/Api';
 import { useParams } from 'react-router-dom';
 import Moment from 'moment';
+import './EventDetailed.css';
 
 const EventDetailed = () => {
   const { id } = useParams();
@@ -21,7 +22,13 @@ const EventDetailed = () => {
       <h3>{event.name}</h3>
       <p>{event.description}</p>
       <div className="ExtraEventInfo">
-        {Moment(new Date(event.date)).format('DD/MM/YYYY')}
+        <span>
+          Marcado para o dia:{' '}
+          <strong>{Moment(new Date(event.date)).format('DD/MM/YYYY')}</strong>
+        </span>
+        <span>
+          Inscrições: <strong>{event.num_atendees}</strong>
+        </span>
       </div>
       <div className="Buttons"></div>
     </div>
