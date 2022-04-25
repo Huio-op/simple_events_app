@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Api from '../../api/Api';
 import { Tooltip } from '@mui/material';
 import Toast from '../../utils/Toast';
-
+import Moment from 'moment';
 import { useParams } from 'react-router-dom';
 
 const CertificateTemplate = ({ ...props }) => {
@@ -65,7 +65,7 @@ const CertificateTemplate = ({ ...props }) => {
                 Este certificado garante que {userValues.name} participou no evento
             </h6>
             <h4>{event.name}</h4>
-            <h6>Esse evento ocorreu em {event.date}</h6>
+            <h6>Esse evento ocorreu em {Moment(new Date(event.date)).format('DD/MM/YYYY')}</h6>
             <h6>Código único do certificado:</h6>
             <div className="tokenClass">
               <h5>{token}</h5>
