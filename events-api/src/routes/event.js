@@ -8,9 +8,18 @@ const readProps = require('../utils/readProps');
 
 // Busca todos os eventos
 routes.get('/', checkUser, async (req, res) => {
+  const { email } = req.tokenPayload;
+
   try {
     const controller = new EventController();
     const events = await controller.fetchEvents();
+
+    const subscribedevents = await controller.findSubscribedEvents({ email });
+
+    events.forEach((event) => {
+      const found = subscribedevents.find((sub) => sub.id === event.id);
+      event.subscribed = !!found;
+    });
 
     return res.sendOk(200, { events });
   } catch (e) {
@@ -27,6 +36,10 @@ routes.get('/subscribed', checkUser, async (req, res) => {
     const controller = new EventController();
     const events = await controller.findSubscribedEvents({ email });
 
+    events.map((event) => {
+      return { ...event, subscribed: true };
+    });
+
     return res.sendOk(200, { events });
   } catch (e) {
     return res.sendError(e);
@@ -35,7 +48,7 @@ routes.get('/subscribed', checkUser, async (req, res) => {
 
 routes.put('/subscribe', checkUser, async (req, res) => {
   const { email } = req.tokenPayload;
-  const { eventId } = req.body;
+  const { eventId, subscribe } = req.body;
 
   let transaction;
   try {
@@ -45,7 +58,7 @@ routes.put('/subscribe', checkUser, async (req, res) => {
     const user = await userController.findOne({ email });
     const controller = new EventController(transaction);
 
-    await controller.subscribe({ eventId, userId: user.id });
+    await controller.subscribe({ eventId, userId: user.id }, subscribe);
 
     await transaction.commit();
     return res.sendOk(200);

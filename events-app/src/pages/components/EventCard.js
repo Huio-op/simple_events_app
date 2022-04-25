@@ -8,11 +8,16 @@ import Button from '@mui/material/Button';
 import Api from '../../api/Api';
 import Toast from '../../utils/Toast';
 
-const EventCard = ({ title, description, eventId, subscribed }) => {
-  const subscribeToEvent = async () => {
+const EventCard = ({ title, description, eventId, subscribed, onToggle }) => {
+  const toggleSubscribe = async () => {
     try {
-      await Api.Events.subscribe(eventId);
-      Toast.success(`Inscrição no evento ${title} confirmada!`);
+      await Api.Events.toggleSubscribe(eventId, !subscribed);
+      if (subscribed) {
+        Toast.success(`Inscrição no evento ${title} cancelada!`);
+      } else {
+        Toast.success(`Inscrição no evento ${title} confirmada!`);
+      }
+      await onToggle();
     } catch (e) {
       console.error(e);
       Toast.error('Erro ao confirmar inscrição!');
@@ -31,8 +36,15 @@ const EventCard = ({ title, description, eventId, subscribed }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={subscribeToEvent}>
-            Inscrever-se
+          <Button
+            className={`${
+              subscribed ? 'outlinedButton' : 'filledButton'
+            } confirmButton`}
+            variant={subscribed ? 'outlined' : 'contained'}
+            size="small"
+            onClick={toggleSubscribe}
+          >
+            {subscribed ? 'Desinscrever-se' : 'Inscrever-se'}
           </Button>
           <Button size="small">Saiba mais</Button>
         </CardActions>

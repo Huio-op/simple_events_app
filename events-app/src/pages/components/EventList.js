@@ -41,6 +41,8 @@ const EventList = ({ subscribed }) => {
               title={event.name}
               description={event.description}
               eventId={event.id}
+              subscribed={event.subscribed}
+              onToggle={fetchEvents}
             />
           );
         })}

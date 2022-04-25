@@ -9,6 +9,11 @@ class EventController {
     }
   }
 
+  async findOne(values) {
+    const event = await this.db('events').where(values).first();
+    return event;
+  }
+
   async fetchEvents() {
     const events = await this.db('events').select();
     return events;
@@ -29,19 +34,34 @@ class EventController {
       .where({ 'user.email': email });
   }
 
-  async subscribe({ eventId, userId }) {
-    const userEvent = this.db('user_event')
-      .insert({
-        user_id: userId,
-        event_id: eventId,
-        attended: false,
-        reg_date: new Date(),
-      })
-      .then(() => {
-        this.db('events')
-          .where({ id: eventId })
-          .update({ num_atendees: knex.raw('num_atendees + 1') });
-      });
+  async subscribe({ eventId, userId }, subscribe) {
+    let userEvent;
+
+    if (subscribe) {
+      userEvent = this.db('user_event')
+        .insert({
+          user_id: userId,
+          event_id: eventId,
+          attended: false,
+          reg_date: new Date(),
+        })
+        .then(() => {
+          const event = this.findOne({ id: eventId });
+          this.db('events')
+            .where({ id: eventId })
+            .update({ num_atendees: event.num_atendees + 1 });
+        });
+    } else {
+      userEvent = this.db('user_event')
+        .where({ user_id: userId, event_id: eventId })
+        .delete()
+        .then(() => {
+          const event = this.findOne({ id: eventId });
+          this.db('events')
+            .where({ id: eventId })
+            .update({ num_atendees: event.num_atendees - 1 });
+        });
+    }
 
     return userEvent;
   }
