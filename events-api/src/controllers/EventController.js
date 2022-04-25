@@ -40,29 +40,26 @@ class EventController {
     let userEvent;
 
     if (subscribe) {
-      userEvent = this.db('user_event')
-        .insert({
-          user_id: userId,
-          event_id: eventId,
-          attended: false,
-          reg_date: new Date(),
-        })
-        .then(() => {
-          const event = this.findOne({ id: eventId });
-          this.db('events')
-            .where({ id: eventId })
-            .update({ num_atendees: event.num_atendees + 1 });
-        });
+      userEvent = await this.db('user_event').insert({
+        user_id: userId,
+        event_id: eventId,
+        attended: false,
+        reg_date: new Date(),
+      });
+      const event = await this.findOne({ id: eventId });
+
+      await this.db('events')
+        .where({ id: eventId })
+        .update({ num_atendees: event.num_atendees + 1 });
     } else {
-      userEvent = this.db('user_event')
+      userEvent = await this.db('user_event')
         .where({ user_id: userId, event_id: eventId })
-        .delete()
-        .then(() => {
-          const event = this.findOne({ id: eventId });
-          this.db('events')
-            .where({ id: eventId })
-            .update({ num_atendees: event.num_atendees - 1 });
-        });
+        .delete();
+
+      const event = await this.findOne({ id: eventId });
+      await this.db('events')
+        .where({ id: eventId })
+        .update({ name: 'teste', num_atendees: event.num_atendees - 1 });
     }
 
     return userEvent;

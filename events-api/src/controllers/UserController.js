@@ -43,6 +43,8 @@ class UserController {
         country: values.country || null,
       });
 
+    console.log('oquevem', newUser);
+
     return newUser;
   }
 }

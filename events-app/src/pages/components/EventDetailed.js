@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Api from '../../api/Api';
 import { useParams } from 'react-router-dom';
+import Moment from 'moment';
 
-const EventDetailed = ({ ...props }) => {
+const EventDetailed = () => {
   const { id } = useParams();
   const [event, setEvent] = useState({});
 
@@ -15,13 +16,13 @@ const EventDetailed = ({ ...props }) => {
     fetchEvent();
   }, []);
 
-  console.log('testeee', event);
-
   return (
     <div className="PageCard" style={{ alignItems: 'center' }}>
       <h3>{event.name}</h3>
       <p>{event.description}</p>
-      <div className="ExtraEventInfo"></div>
+      <div className="ExtraEventInfo">
+        {Moment(new Date(event.date)).format('DD/MM/YYYY')}
+      </div>
       <div className="Buttons"></div>
     </div>
   );
