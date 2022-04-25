@@ -73,10 +73,11 @@ routes.post('/', async (req, res) => {
     });
 
     const token = jwt.generate({ email: user.email });
-    await transaction.commit();
 
     const mailer = new Mailer();
     mailer.sendUserCreated(email);
+
+    await transaction.commit();
 
     return res.sendOk(201, { token });
   } catch (e) {
@@ -96,6 +97,9 @@ routes.put('/', checkUser, async (req, res) => {
     const controller = new UserController(transaction);
 
     const edited = await controller.edit(values);
+
+    const mailer = new Mailer();
+    mailer.sendUserCreated(email);
 
     await transaction.commit();
     return res.sendOk(200, { edited });

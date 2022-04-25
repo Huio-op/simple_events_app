@@ -3,8 +3,9 @@ const knex = require('../database/knex');
 const EventController = require('../controllers/EventController');
 const UserController = require('../controllers/UserController');
 const ErrorHandler = require('../utils/ErrorHandler');
+const Mailer = require('../utils/Mailer');
 const checkUser = require('../middlewares/checkUser');
-const readProps = require('../utils/readProps');
+const moment = require('moment');
 
 // Busca todos os eventos
 routes.get('/', checkUser, async (req, res) => {
@@ -58,7 +59,19 @@ routes.put('/subscribe', checkUser, async (req, res) => {
     const user = await userController.findOne({ email });
     const controller = new EventController(transaction);
 
-    await controller.subscribe({ eventId, userId: user.id }, subscribe);
+    const event = await controller.subscribe(
+      { eventId, userId: user.id },
+      subscribe,
+    );
+
+    const mailer = new Mailer();
+    subscribe
+      ? mailer.sendUserSubscribed(
+          email,
+          event.name,
+          moment(new Date(event.date)).format('DD/MM/YYYY'),
+        )
+      : mailer.sendUserUnsubscribed(email, event.name);
 
     await transaction.commit();
     return res.sendOk(200);

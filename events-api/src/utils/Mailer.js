@@ -28,6 +28,24 @@ class Mailer {
       html: readProps('create_user_msg'),
     });
   }
+
+  async sendUserEdited(userEmail) {
+    await this.send(userEmail, readProps('edit_user_subj'), {
+      html: readProps('edit_user_msg'),
+    });
+  }
+
+  async sendUserSubscribed(userEmail, eventName, eventDate) {
+    await this.send(userEmail, readProps('subs_event_subj'), {
+      html: readProps('subs_event_msg', eventName, eventDate),
+    });
+  }
+
+  async sendUserUnsubscribed(userEmail, eventName) {
+    await this.send(userEmail, readProps('unsubs_event_subj'), {
+      html: readProps('unsubs_event_msg', eventName),
+    });
+  }
 }
 
 module.exports = Mailer;

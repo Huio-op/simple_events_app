@@ -49,6 +49,7 @@ class EventController {
 
   async subscribe({ eventId, userId }, subscribe) {
     let userEvent;
+    let event;
 
     if (subscribe) {
       userEvent = await this.db('user_event').insert({
@@ -57,7 +58,7 @@ class EventController {
         attended: false,
         reg_date: new Date(),
       });
-      const event = await this.findOne({ id: eventId });
+      event = await this.findOne({ id: eventId });
 
       await this.db('events')
         .where({ id: eventId })
@@ -67,13 +68,13 @@ class EventController {
         .where({ user_id: userId, event_id: eventId })
         .delete();
 
-      const event = await this.findOne({ id: eventId });
+      event = await this.findOne({ id: eventId });
       await this.db('events')
         .where({ id: eventId })
         .update({ num_atendees: event.num_atendees - 1 });
     }
 
-    return userEvent;
+    return event;
   }
 
   async generateCertHash({ eventId, userId, userName, userEmail }) {
