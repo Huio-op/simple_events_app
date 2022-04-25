@@ -1,4 +1,6 @@
 const knex = require('../database/knex');
+const jwt = require('../utils/jwt');
+require('dotenv').config();
 
 class EventController {
   constructor(transaction) {
@@ -64,6 +66,23 @@ class EventController {
     }
 
     return userEvent;
+  }
+
+  async generateCertHash({ eventId, userId, userName, userEmail }) {
+    const userEvent = this.db('user_event')
+      .where({ user_id: userId, event_id: eventId })
+      .first();
+
+    const event = this.findOne({ id: eventId });
+
+    return jwt.generate({
+      userId: userEvent.user_id,
+      eventId: userEvent.event_id,
+      id: userEvent.id,
+      eventName: event.name,
+      userName,
+      userEmail,
+    });
   }
 }
 

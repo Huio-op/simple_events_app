@@ -69,4 +69,27 @@ routes.put('/subscribe', checkUser, async (req, res) => {
   }
 });
 
+routes.get('/certificate', checkUser, async (req, res) => {
+  const { email } = req.tokenPayload;
+  const { eventId } = req.body;
+
+  try {
+    const userController = new UserController();
+    const user = await userController.findOne({ email });
+    const controller = new EventController();
+
+    const certToken = await controller.generateCertHash({
+      eventId,
+      userId: user.id,
+      userName: user.name,
+      userEmail: email,
+    });
+
+    return res.sendOk(200), { certToken };
+  } catch (e) {
+    console.error(e);
+    return res.sendError(e);
+  }
+});
+
 module.exports = routes;
