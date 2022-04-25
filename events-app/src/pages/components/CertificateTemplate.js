@@ -9,18 +9,12 @@ import Moment from 'moment';
 import { useParams } from 'react-router-dom';
 
 const CertificateTemplate = ({ ...props }) => {
-
   const { id } = useParams();
-  const [event, setEvent] = useState({});    
+  const [event, setEvent] = useState({});
   const [userValues, setUserValues] = useState({});
   const [token, setToken] = useState('');
 
-  const fetchEvent = async () => {
-    const event = await Api.Events.findEvent(id);
-    setEvent(event);
-  };
-
-  const fetchUser = async () => {
+  const fetchData = async () => {
     try {
       const { user } = await Api.User.findUser();
       console.log(user.email);
@@ -31,55 +25,52 @@ const CertificateTemplate = ({ ...props }) => {
         phone: user.phone,
         country: user.country,
       });
-      return user;
+      const event = await Api.Events.findEvent(id);
+      setEvent(event);
     } catch (e) {
-      Toast.error("Não foi possível pegar as informações do usuário");
+      Toast.error('Não foi possível buscar as informações do usuário');
     }
-  };
-
-  const generateCertificate = async () => {
 
     try {
-      const token  = await Api.Events.findCertificate(id);
-      console.log('aaaaaaaaaaaaa', token)
+      const token = await Api.Events.findCertificate(id);
       setToken(token);
     } catch (e) {
-      Toast.error("Não foi possível gerar o token");
+      Toast.error('Não foi possível gerar o token');
       console.log(e);
     }
-
   };
 
   useEffect(() => {
-    fetchUser();
-    fetchEvent();
-    generateCertificate();
+    fetchData();
   }, []);
 
   return (
-    <>
+    <div className="centeredPageWrapper">
       <div className="PageCard">
         <div className="card">
-            <h3>Certificado de presença no evento</h3>
-            <h6>
-                Este certificado garante que {userValues.name} participou no evento
-            </h6>
-            <h4>{event.name}</h4>
-            <h6>Esse evento ocorreu em {Moment(new Date(event.date)).format('DD/MM/YYYY')}</h6>
-            <h6>Código único do certificado:</h6>
-            <div className="tokenClass">
-              <h5>{token}</h5>
-            </div>
+          <h3>Certificado de presença no evento</h3>
+          <h6>
+            Este certificado garante que {userValues.name} participou no evento
+          </h6>
+          <h4>{event.name}</h4>
+          <h6>
+            Esse evento ocorreu em{' '}
+            {Moment(new Date(event.date)).format('DD/MM/YYYY')}
+          </h6>
+          <h6>Código único do certificado:</h6>
+          <div className="tokenClass">
+            <h5>{token}</h5>
           </div>
-          <Button
-            className="filledButton confirmEmailButton"
-            variant="contained"
-            type="submit"
-          >
-            Enviar para e-mail
-          </Button>
+        </div>
+        <Button
+          className="filledButton confirmEmailButton"
+          variant="contained"
+          type="submit"
+        >
+          Enviar para e-mail
+        </Button>
       </div>
-    </>
+    </div>
   );
 };
 
