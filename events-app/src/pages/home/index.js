@@ -4,6 +4,7 @@ import TopMenuBar from '../components/TopMenuBar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import EventList from '../components/EventList';
 import Profile from '../components/Profile';
+import CertificateTemplate from '../components/CertificateTemplate';
 
 const Home = () => {
   return (
@@ -18,7 +19,9 @@ const Home = () => {
           path="/events/subscribed"
           element={<EventList subscribed={true} />}
         />
-        <Route path="/profile" element={<Profile subscribed={true} />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/events/certificate" element={<EventList pastEvents={true} />} />
+        <Route path="/certificate" element={<CertificateTemplate />} />
       </Routes>
     </div>
   );

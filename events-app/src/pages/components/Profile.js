@@ -126,6 +126,7 @@ const Profile = () => {
             label="Nome Completo"
             value={userValues.name}
             variant="outlined"
+            InputLabelProps={{ shrink: true }}
             name="nome"
             onChange={(e) => {
               setUserValues({ ...userValues, name: e.target.value });
@@ -136,6 +137,7 @@ const Profile = () => {
             label="Telefone"
             value={userValues.phone}
             variant="outlined"
+            InputLabelProps={{ shrink: true }}
             name="phone"
             onChange={(e) => {
               setUserValues({ ...userValues, phone: e.target.value });
@@ -146,6 +148,7 @@ const Profile = () => {
             label="País"
             value={userValues.country}
             variant="outlined"
+            InputLabelProps={{ shrink: true }}
             name="country"
             onChange={(e) => {
               setUserValues({ ...userValues, country: e.target.value });
