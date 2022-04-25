@@ -71,7 +71,7 @@ routes.put('/subscribe', checkUser, async (req, res) => {
 
 routes.get('/certificate', checkUser, async (req, res) => {
   const { email } = req.tokenPayload;
-  const { eventId } = req.body;
+  const { eventId } = req.query;
 
   try {
     const userController = new UserController();
@@ -85,7 +85,7 @@ routes.get('/certificate', checkUser, async (req, res) => {
       userEmail: email,
     });
 
-    return res.sendOk(200), { certToken };
+    return res.sendOk(200, { certToken });
   } catch (e) {
     console.error(e);
     return res.sendError(e);

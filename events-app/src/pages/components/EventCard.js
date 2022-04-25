@@ -31,7 +31,9 @@ const EventCard = ({ event, onToggle }) => {
     navigate(`/home/events/detailed/${event.id}`);
   };
 
-  const generateCertificate = () => {};
+  const generateCertificate = () => {
+    navigate(`/home/certificate/${event.id}`);
+  };
 
   return (
     <>
