@@ -12,7 +12,6 @@ class EventController {
   }
 
   async findOne(values, userId) {
-    console.log('valu', values, userId);
     const event = await this.db('events').where(values).first();
     if (userId) {
       const userEvent = await this.db('user_event')

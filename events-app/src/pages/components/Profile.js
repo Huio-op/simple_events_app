@@ -13,10 +13,8 @@ const Profile = () => {
   const [userValues, setUserValues] = useState({});
 
   const fetchUser = async () => {
-    console.log('entrou');
     try {
       const { user } = await Api.User.findUser();
-      console.log(user.email);
       setUserValues({
         ...userValues,
         name: user.name,
@@ -36,7 +34,6 @@ const Profile = () => {
   }, []);
 
   const editUser = async (event) => {
-    console.log(userValues);
     event.preventDefault();
     try {
       const newUser = await Api.User.editUser(userValues);

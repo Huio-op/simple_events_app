@@ -25,7 +25,6 @@ const Signup = () => {
         Toast.success('Usuário criado com sucesso!');
         navigate('/login');
       } catch (e) {
-        console.log('err', { e });
         console.error(e);
         if (e.response?.data.error.status === 409) {
           Toast.error(e.response?.data.message);
@@ -57,7 +56,6 @@ const Signup = () => {
         password: true,
         passwordConfirm: true,
       });
-      console.log('senhas não valido');
       return false;
     }
   };
@@ -67,7 +65,6 @@ const Signup = () => {
     if (!regex.test(fieldValues.email)) {
       setErrorsEmail({ ...errorsEmail, email: true });
       setHelperEmail({ email: 'O e-mail digitado não é válido' });
-      console.log('email não valido');
       return false;
     } else {
       setErrorsEmail({ ...errorsEmail, email: false });

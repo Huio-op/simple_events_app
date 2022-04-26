@@ -2,7 +2,6 @@ const routes = require('express').Router();
 const knex = require('../database/knex');
 const EventController = require('../controllers/EventController');
 const UserController = require('../controllers/UserController');
-const ErrorHandler = require('../utils/ErrorHandler');
 const Mailer = require('../utils/Mailer');
 const checkUser = require('../middlewares/checkUser');
 const moment = require('moment');
@@ -115,7 +114,6 @@ routes.get('/detailed', checkUser, async (req, res) => {
     const controller = new EventController();
 
     const event = await controller.findOne({ id: eventId }, user.id);
-    console.log('achooo', event);
 
     return res.sendOk(200, { event });
   } catch (e) {

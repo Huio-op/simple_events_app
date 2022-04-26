@@ -40,7 +40,6 @@ routes.post('/login', async (req, res) => {
     token = jwt.generate({ email });
     return res.sendOk(200, { token });
   } catch (e) {
-    console.log('5 - ', e);
     return res.sendError(e);
   }
 });
@@ -54,7 +53,6 @@ routes.post('/', async (req, res) => {
   try {
     const controller = new UserController();
     const createdUser = await controller.findOne({ email });
-    console.log('crearearea', createdUser);
     if (createdUser) {
       ErrorHandler.throwError(409, readProps('user_already_created'));
     }
@@ -89,7 +87,6 @@ routes.post('/', async (req, res) => {
 // Editar usuário
 routes.put('/', checkUser, async (req, res) => {
   const values = req.body;
-  console.log('balulululu', values);
   let transaction;
 
   try {

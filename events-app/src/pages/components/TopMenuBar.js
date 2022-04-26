@@ -22,7 +22,6 @@ const TopMenuBar = () => {
   const fetchUser = async () => {
     try {
       const { user } = await Api.User.findUser();
-      console.log(user.email);
       setUserValues({
         ...userValues,
         name: user.name,
@@ -32,7 +31,8 @@ const TopMenuBar = () => {
       });
       return user;
     } catch (e) {
-      Toast.error("Não foi possível pegar as informações do usuário");
+      Toast.error('Não foi possível pegar as informações do usuário');
+      console.error(e);
     }
   };
 
@@ -68,7 +68,7 @@ const TopMenuBar = () => {
         navigate('/home/validation');
         handleClose();
       },
-    }
+    },
   ];
 
   const profileMenuOpts = [
@@ -131,13 +131,15 @@ const TopMenuBar = () => {
               customButton={(open, handleClick) => {
                 return (
                   <div className="profileButton">
-                    {(userValues.name == null || userValues.phone == null || userValues.country == null) &&
-                    <Tooltip title="Por favor, complete seu cadastro">
-                      <IconButton onClick={() => navigate('/home/profile')}>
-                        <ErrorIcon />
-                      </IconButton>
-                    </Tooltip>
-                    }
+                    {(userValues.name == null ||
+                      userValues.phone == null ||
+                      userValues.country == null) && (
+                      <Tooltip title="Por favor, complete seu cadastro">
+                        <IconButton onClick={() => navigate('/home/profile')}>
+                          <ErrorIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )}
                     <Button
                       color="inherit"
                       id="basic-button"

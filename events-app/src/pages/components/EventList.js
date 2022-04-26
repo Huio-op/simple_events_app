@@ -38,7 +38,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -50,6 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const EventList = ({ subscribed, pastEvents }) => {
   const [events, setEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchEvents = async () => {
     try {
@@ -86,6 +86,15 @@ const EventList = ({ subscribed, pastEvents }) => {
     fetchEvents();
   }, [subscribed, pastEvents]);
 
+  const filteredEvents =
+    searchTerm !== ''
+      ? events.filter((event) => {
+          return event.name
+            .toLowerCase()
+            .includes(searchTerm.toLocaleLowerCase());
+        })
+      : events;
+
   return (
     <>
       <div className="PageCard">
@@ -97,6 +106,9 @@ const EventList = ({ subscribed, pastEvents }) => {
             className="SearchInputField"
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search' }}
+            onChange={(e) => {
+              setSearchTerm(e.currentTarget.value);
+            }}
           />
         </Search>
         {events.length === 0 && subscribed && (
@@ -108,7 +120,7 @@ const EventList = ({ subscribed, pastEvents }) => {
             </h6>
           </div>
         )}
-        {events.map((event, index) => {
+        {filteredEvents.map((event, index) => {
           return <EventCard key={index} event={event} onToggle={fetchEvents} />;
         })}
       </div>

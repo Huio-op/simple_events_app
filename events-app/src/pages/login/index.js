@@ -24,7 +24,6 @@ const Login = ({ setLoggedIn }) => {
         navigate('/home');
       }
     } catch (e) {
-      console.log('err', { e });
       if (e.response?.data.error.status === 409) {
         Toast.error(e.response?.data.error.message);
       } else {

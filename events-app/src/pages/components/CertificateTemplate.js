@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './CertificateTemplate.css';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Api from '../../api/Api';
-import { Tooltip } from '@mui/material';
 import Toast from '../../utils/Toast';
 import Moment from 'moment';
 import { useParams } from 'react-router-dom';
 
-const CertificateTemplate = ({ ...props }) => {
+const CertificateTemplate = () => {
   const { id } = useParams();
   const [event, setEvent] = useState({});
   const [userValues, setUserValues] = useState({});
@@ -17,7 +15,6 @@ const CertificateTemplate = ({ ...props }) => {
   const fetchData = async () => {
     try {
       const { user } = await Api.User.findUser();
-      console.log(user.email);
       setUserValues({
         ...userValues,
         name: user.name,
@@ -36,7 +33,7 @@ const CertificateTemplate = ({ ...props }) => {
       setToken(token);
     } catch (e) {
       Toast.error('Não foi possível gerar o token');
-      console.log(e);
+      console.error(e);
     }
   };
 
