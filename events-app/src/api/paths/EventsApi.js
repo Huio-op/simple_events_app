@@ -44,6 +44,17 @@ class EventsApi {
     });
     return data.certToken;
   };
+
+  static sendCertificate = async (eventId) => {
+    await Axios.post(
+      '/event/certificate',
+      {},
+      {
+        params: { eventId: eventId },
+        headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+      },
+    );
+  };
 }
 
 export default EventsApi;

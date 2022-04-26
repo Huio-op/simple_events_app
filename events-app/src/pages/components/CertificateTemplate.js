@@ -29,8 +29,9 @@ const CertificateTemplate = () => {
     }
 
     try {
-      const token = await Api.Events.findCertificate(id);
-      setToken(token);
+      const { certToken } = await Api.Events.findCertificate(id);
+      console.log('token0', token);
+      setToken(certToken);
     } catch (e) {
       Toast.error('Não foi possível gerar o token');
       console.error(e);
@@ -41,13 +42,24 @@ const CertificateTemplate = () => {
     fetchData();
   }, []);
 
+  const sendToEmail = async () => {
+    try {
+      await Api.Events.sendCertificate(id);
+      Toast.success('Token enviado por email com suesso!');
+    } catch (e) {
+      Toast.error('Não foi possível enviar o token por email');
+      console.error(e);
+    }
+  };
+
   return (
     <div className="centeredPageWrapper">
       <div className="PageCard">
         <div className="card">
           <h3>Certificado de presença no evento</h3>
           <h6>
-            Este certificado garante que {userValues.name} participou no evento
+            Este certificado garante que {userValues.name || userValues.email}{' '}
+            participou no evento
           </h6>
           <h4>{event.name}</h4>
           <h6>
@@ -63,6 +75,7 @@ const CertificateTemplate = () => {
           className="filledButton confirmEmailButton"
           variant="contained"
           type="submit"
+          onClick={sendToEmail}
         >
           Enviar para e-mail
         </Button>

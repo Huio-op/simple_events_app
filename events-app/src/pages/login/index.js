@@ -63,7 +63,7 @@ const Login = ({ setLoggedIn }) => {
         </Button>
         <a className="signupRedirect" href="/signup">
           <Button className="outlinedButton" variant="outlined">
-            Sign up
+            CADASTRO
           </Button>
         </a>
       </div>

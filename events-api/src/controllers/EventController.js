@@ -83,14 +83,17 @@ class EventController {
 
     const event = this.findOne({ id: eventId });
 
-    return jwt.generate({
-      userId: userEvent.user_id,
-      eventId: userEvent.event_id,
-      id: userEvent.id,
+    return {
+      certToken: jwt.generate({
+        userId: userEvent.user_id,
+        eventId: userEvent.event_id,
+        id: userEvent.id,
+        eventName: event.name,
+        userName,
+        userEmail,
+      }),
       eventName: event.name,
-      userName,
-      userEmail,
-    });
+    };
   }
 }
 

@@ -104,6 +104,32 @@ routes.get('/certificate', checkUser, async (req, res) => {
   }
 });
 
+routes.post('/certificate', checkUser, async (req, res) => {
+  const { email } = req.tokenPayload;
+  const { eventId } = req.query;
+
+  try {
+    const userController = new UserController();
+    const user = await userController.findOne({ email });
+    const controller = new EventController();
+
+    const { certToken, eventName } = await controller.generateCertHash({
+      eventId,
+      userId: user.id,
+      userName: user.name,
+      userEmail: email,
+    });
+
+    const mailer = new Mailer();
+    mailer.sendToken(email, certToken, eventName);
+
+    return res.sendOk(200);
+  } catch (e) {
+    console.error(e);
+    return res.sendError(e);
+  }
+});
+
 routes.get('/detailed', checkUser, async (req, res) => {
   const { email } = req.tokenPayload;
   const { eventId } = req.query;

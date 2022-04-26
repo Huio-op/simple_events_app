@@ -46,6 +46,12 @@ class Mailer {
       html: readProps('unsubs_event_msg', eventName),
     });
   }
+
+  async sendToken(userEmail, token, eventName) {
+    await this.send(userEmail, readProps('cert_event_subj'), {
+      html: readProps('cert_event_msg', eventName, token),
+    });
+  }
 }
 
 module.exports = Mailer;
