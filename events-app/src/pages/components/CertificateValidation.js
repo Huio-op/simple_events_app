@@ -1,22 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import Toast from '../../utils/Toast';
 import Api from '../../api/Api';
-import EventCard from '../components/EventCard';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import './CertificateValidation.css';
 
 const CertificateValidation = () => {
+  const [token, setToken] = useState('');
+  const [tokenValues, setTokenValues] = useState({ valid: false });
+
+  const validateToken = async () => {
+    try {
+      const tokenValues = await Api.Events.validateToken(token);
+      setTokenValues(tokenValues);
+      if (valid) {
+        Toast.success('Token é valido!');
+      } else {
+        Toast.error('Token invalido!');
+      }
+    } catch (e) {
+      Toast.error('Erro ao validar Token!');
+    }
+  };
 
   return (
-    <>
+    <div className="CertificateValidation centeredPageWrapper">
       <div className="PageCard">
-          <div className="card">
-            <h3>Você não está inscrito em nenhum evento</h3>
-            <h6>
-              Volte para a página de eventos e se inscreva em algum que você
-              gostar
-            </h6>
-            </div>
-            </div>
-    </>
+        <div className="card">
+          <TextField
+            id="token"
+            label="Token de certificado"
+            value={token}
+            variant="outlined"
+            name="token"
+            onChange={(e) => {
+              setToken(e.target.value);
+              setTokenValues({ valid: false });
+            }}
+          />
+
+          <Button
+            className="filledButton"
+            variant="contained"
+            size="small"
+            onClick={validateToken}
+          >
+            Validar Token
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 

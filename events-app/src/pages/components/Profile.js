@@ -36,7 +36,7 @@ const Profile = () => {
   const editUser = async (event) => {
     event.preventDefault();
     try {
-      const newUser = await Api.User.editUser(userValues);
+      await Api.User.editUser(userValues);
       Toast.success('Usuário editado com sucesso!');
       navigate('/home/events');
     } catch (e) {

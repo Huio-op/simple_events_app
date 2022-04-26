@@ -55,6 +55,18 @@ class EventsApi {
       },
     );
   };
+
+  static validateToken = async (token) => {
+    const { data } = await Axios.post(
+      '/event/validate',
+      { token },
+      {
+        headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
+      },
+    );
+
+    return data.valid;
+  };
 }
 
 export default EventsApi;
