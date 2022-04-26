@@ -86,6 +86,7 @@ routes.post('/', async (req, res) => {
 
 // Editar usuário
 routes.put('/', checkUser, async (req, res) => {
+  const { email } = req.tokenPayload;
   const values = req.body;
   let transaction;
 
@@ -96,7 +97,7 @@ routes.put('/', checkUser, async (req, res) => {
     const edited = await controller.edit(values);
 
     const mailer = new Mailer();
-    mailer.sendUserCreated(email);
+    mailer.sendUserEdited(email);
 
     await transaction.commit();
     return res.sendOk(200, { edited });
