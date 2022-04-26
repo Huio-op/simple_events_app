@@ -13,7 +13,7 @@ const CertificateValidation = () => {
     try {
       const tokenValues = await Api.Events.validateToken(token);
       setTokenValues(tokenValues);
-      if (valid) {
+      if (tokenValues.valid) {
         Toast.success('Token é valido!');
       } else {
         Toast.error('Token invalido!');
