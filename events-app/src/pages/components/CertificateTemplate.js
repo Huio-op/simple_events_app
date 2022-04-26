@@ -30,7 +30,6 @@ const CertificateTemplate = () => {
 
     try {
       const { certToken } = await Api.Events.findCertificate(id);
-      console.log('token0', token);
       setToken(certToken);
     } catch (e) {
       Toast.error('Não foi possível gerar o token');
