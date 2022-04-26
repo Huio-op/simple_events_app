@@ -13,14 +13,20 @@ const EventCard = ({ event, onToggle }) => {
   const navigate = useNavigate();
 
   const toggleSubscribe = async () => {
+    const dataAtual = new Date();
+    const eventDate = new Date(event.date);
+    const dataComparar = new Date(eventDate.setDate(eventDate.getDate() - 2));
     try {
       await Api.Events.toggleSubscribe(event.id, !event.subscribed);
-      if (event.subscribed) {
+      if (event.subscribed && dataComparar > dataAtual) {
         Toast.success(`Inscrição no evento ${event.name} cancelada!`);
+        await onToggle();
+      } else if (event.subscribed && dataComparar < dataAtual) {
+        Toast.error(`Você não pode cancelar sua inscrição pois faltam menos de 2 dias para ocorrer o evento!`);
       } else {
         Toast.success(`Inscrição no evento ${event.name} confirmada!`);
+        await onToggle();
       }
-      await onToggle();
     } catch (e) {
       console.error(e);
       Toast.error('Erro ao confirmar inscrição!');
