@@ -140,10 +140,8 @@ routes.post('/validate', checkUser, async (req, res) => {
     const controller = new EventController();
 
     jwt.verify(token, async (error, decoded) => {
-      console.log('devococoococ', decoded);
       if (!error && email === decoded.userEmail) {
         const verified = await controller.verifyToken(decoded);
-        console.log('verifieeed', verified);
         if (verified) {
           return res.sendOk(200, { valid: true, ...decoded });
         }
