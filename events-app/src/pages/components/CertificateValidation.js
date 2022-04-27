@@ -11,9 +11,9 @@ const CertificateValidation = () => {
 
   const validateToken = async () => {
     try {
-      const tokenValues = await Api.Events.validateToken(token);
-      setTokenValues(tokenValues);
-      if (tokenValues.valid) {
+      const response = await Api.Events.validateToken(token);
+      setTokenValues(response);
+      if (response.valid) {
         Toast.success('Token é valido!');
       } else {
         Toast.error('Token invalido!');
@@ -48,6 +48,14 @@ const CertificateValidation = () => {
             Validar Token
           </Button>
         </div>
+        {tokenValues.valid && (
+          <div className="card">
+            Este token valida a presença do portador do email{' '}
+            <strong>{tokenValues.userEmail}</strong>
+            <br></br>
+            no evento <strong>{tokenValues.eventName}</strong>
+          </div>
+        )}
       </div>
     </div>
   );

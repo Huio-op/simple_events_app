@@ -64,8 +64,8 @@ class EventsApi {
         headers: { authorization: localStorage.getItem('ACCESS_TOKEN') },
       },
     );
-
-    return data.valid;
+    console.log('datatatatatata', data);
+    return data;
   };
 }
 

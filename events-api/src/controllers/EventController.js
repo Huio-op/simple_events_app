@@ -77,23 +77,35 @@ class EventController {
   }
 
   async generateCertHash({ eventId, userId, userName, userEmail }) {
-    const userEvent = this.db('user_event')
+    const userEvent = await this.db('user_event')
       .where({ user_id: userId, event_id: eventId })
       .first();
 
-    const event = this.findOne({ id: eventId });
+    const event = await this.findOne({ id: eventId });
 
     return {
       certToken: jwt.generate({
         userId: userEvent.user_id,
-        eventId: userEvent.event_id,
         id: userEvent.id,
-        eventName: event.name,
-        userName,
         userEmail,
+        eventId: userEvent.event_id,
+        eventName: event.name,
       }),
       eventName: event.name,
     };
+  }
+
+  async verifyToken(token) {
+    const userEvent = await this.db('user_event')
+      .where({
+        user_id: token.userId,
+        event_id: token.eventId,
+        id: token.id,
+        attended: true,
+      })
+      .first();
+
+    return !!userEvent;
   }
 }
 
